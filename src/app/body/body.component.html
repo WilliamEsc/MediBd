@@ -1,0 +1,18 @@
+<div id="conteneurSelecteurTheme" title="Appliquer un thème clair/par défaut/sombre">
+	<ngbd-theme-switch class=""></ngbd-theme-switch>
+</div>
+<ul ngbNav #nav="ngbNav" class="nav-tabs" animation="true" keyboard="true">
+	<li ngbNavItem>
+		<a ngbNavLink>Recherche</a>
+		<ng-template ngbNavContent>
+			<app-recherche></app-recherche>
+		</ng-template>
+	</li>
+	<li ngbNavItem>
+		<a ngbNavLink>Analyses</a>
+		<ng-template ngbNavContent>
+			<app-analyses></app-analyses>
+		</ng-template>
+	</li>
+</ul>
+<div [ngbNavOutlet]="nav" class="mt-2" ></div>

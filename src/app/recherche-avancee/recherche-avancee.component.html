@@ -1,0 +1,176 @@
+<div class="card">
+	<div class="card-body">
+		<div class="form-row">
+			<!-- Format :-->
+			<div class="col">
+				<!-- Modal Format -->
+				<ng-template #longContent1 let-modal>
+					<div class="modal-header">
+					  	<h4 class="modal-title">Formes pharmaceutiques :</h4>
+						<button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')" >
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="form-check" *ngFor="let forme of formes">
+							<input class="form-check-input" type="checkbox" [checked]="forme.selected" (change)="forme.selected = !forme.selected"
+							 [value]="forme.value" id="{{forme.value}}">
+							<label for="{{forme.value}}">
+								{{forme.value}}
+							</label>
+						</div>
+					</div>
+					<div class="modal-footer">
+					 	<button type="button" class="btn btn-light" ngbAutofocus (click)="modal.close('Close click')">Fermer</button>
+					</div>
+				</ng-template>
+				<button class="btn btn-outline-secondary mb-2 mr-2" (click)="openScrollableContent(longContent1)" ngbPopover="Cliquez pour sélectionner des formes pharmaceutiques" triggers="mouseenter:mouseleave">
+					Formes pharmaceutiques
+					<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+						<path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+						<path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+					</svg>
+				</button>
+				<!-- Fin Modal Format -->
+			</div>
+			<!-- Voie d'administration : -->
+			<div class="col">
+				<!-- Modal Voie d'administration -->
+				<ng-template #longContent2 let-modal>
+				<div class="modal-header">
+					<h4 class="modal-title">Voies d'administration :</h4>
+					<button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-check" *ngFor="let voie of voies">
+						<input class="form-check-input" type="checkbox" [checked]="voie.selected" (change)="voie.selected = !voie.selected" 
+						[value]="voie.value" id="{{voie.value}}">
+						<label for="{{voie.value}}">
+							{{voie.value}}
+						</label>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-light" ngbAutofocus (click)="modal.close('Close click')">Fermer</button>
+				</div>
+				</ng-template>
+				<button class="btn btn-outline-secondary mb-2 mr-2" (click)="openLgScrollableContent(longContent2)" ngbPopover="Cliquez pour sélectionner des voies d'administration" triggers="mouseenter:mouseleave">
+					Voies d'administration
+					<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+						<path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+						<path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+					</svg>
+				</button>
+				<!-- Fin Modal Voie d'administration -->
+			</div>
+			<!-- Procédure : -->
+			<div class="col">
+				<!-- Modal Procédure -->
+				<ng-template #longContent3 let-modal>
+					<div class="modal-header">
+						<h4 class="modal-title">Types de procédures d'autorisation de mise sur le marché (AMM) :</h4>
+						<button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="form-check" *ngFor="let amm of AMM">
+							<input class="form-check-input" type="checkbox" [checked]="amm.selected" (change)="amm.selected = !amm.selected"
+							[value]="amm.value" id="{{amm.value}}">
+							<label for="{{amm.value}}">
+								{{amm.value}}
+							</label>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-light" ngbAutofocus (click)="modal.close('Close click')">Fermer</button>
+					</div>
+				</ng-template>
+				<button class="btn btn-outline-secondary mb-2 mr-2" (click)="openScrollableContent(longContent3)" ngbPopover="Cliquez pour sélectionner des types de procédures d'autorisation de mise sur le marché (AMM)" triggers="mouseenter:mouseleave">
+					Procédure d'autorisation de mise sur le marché
+					<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+						<path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+						<path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+					</svg>
+				</button>
+				<!-- Fin Procédure -->
+			</div>
+		</div>
+		<div class="form-row mt-1">
+			<!-- Autorisation : -->
+			<div class="col">
+				<div class="form-group">
+					<label for="autorisation">Statut administratif de l’autorisation de mise sur le marché (AMM) :</label>
+					<div class="form-check form-check-inline" id="autorisation">
+						<label class="form-check-label" for="active&abroge">Les 2</label>
+						<input class="form-check-input" type="radio" name="autorisation" id="active&abroge" value="active&abroge" checked/>
+						<label class="form-check-label" for="active">Active</label>
+						<input class="form-check-input" type="radio" name="autorisation" id="active" value="active" />
+						<label class="form-check-label" for="abroge">Abrogée</label>
+						<input class="form-check-input" type="radio" name="autorisation" id="abroge" value="abroge" />
+					</div>
+				</div>
+			</div>
+			<!-- Comercialisé : -->
+			<div class="col">
+				<div class="form-group">
+					<label for="commercialise">État de commercialisation :</label>
+					<div class="form-check form-check-inline" id="commercialise">
+						<label class="form-check-label" for="oui&non">Les 2</label>
+						<input class="form-check-input" type="radio" name="commercialise" id="oui&non" value="oui&non" checked/>
+						<label class="form-check-label" for="oui">Oui</label>
+						<input class="form-check-input" type="radio" name="commercialise" id="oui" value="oui" />
+						<label class="form-check-label" for="non">Non</label>
+						<input class="form-check-input" type="radio" name="commercialise" id="non" value="non" />
+					</div>
+				</div>
+			</div>
+			<!-- Surveillance renforcée : -->
+			<div class="col">
+				<div class="form-group">
+					<label for="surveillance">Surveillance renforcée :</label>
+					<div class="form-check form-check-inline" id="surveillance">
+						<label class="form-check-label" for="ouiNonSurveillance">Les 2</label>
+						<input class="form-check-input" type="radio" name="surveillance" id="ouiNonSurveillance" value="oui&non" checked/>
+						<label class="form-check-label" for="ouiSurveillance">Oui</label>
+						<input class="form-check-input" type="radio" name="surveillance" id="ouiSurveillance" value="oui" />
+						<label class="form-check-label" for="nonSurveillance">Non</label>
+						<input class="form-check-input" type="radio" name="surveillance" id="nonSurveillance" value="non" />
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-row mt-1">
+			<!-- Statut BDM : -->
+			<div class="col">
+				<label for="statut">Statut BDM :</label>
+				<select class="form-control" id="statut">
+					<option value="">---</option>
+					<option value="alerte">Alerte</option>
+					<option value="warning">Warning disponibilité</option>
+				</select>
+			</div>
+			<!-- Numéro de l’autorisation européenne : -->
+			<div class="col">
+				<div class="form-group">
+					<label for="autorisation_euro">Numéro de l’autorisation européenne :</label>
+					<input id="autorisation_euro" name="autorisation_euro" class="form-control"/>
+				</div>
+			</div>
+			<!-- Titulaires : -->														<!-- Plusieurs séparés par "," ? -->
+			<div class="col">
+				<div class="form-group">
+					<label for="titulaire">Titulaire(s) :</label>
+					<input placeholder="BIOGARAN" id="titulaire" name="titulaire" class="form-control" />
+					<small class="form-text text-muted">Séparer chaque titulaire par une virgule</small>
+				</div>
+			</div>
+		</div>
+		<div class="form-row mt-1 justify-content-center">
+			<!-- Date de l'autorisation :-->
+			<ngbd-datepicker-i18n></ngbd-datepicker-i18n>
+		</div>
+	</div>
+</div>

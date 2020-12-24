@@ -1,0 +1,228 @@
+<section class="row justify-content-center" style="margin:0 0 0 0;">
+	<h1>Recherche de médicaments</h1>
+	<form class="form-group col-8 justify-content-center" (ngSubmit)="appelRecherche($event)"><!-- Réglage Largeur de la barre de recherche principale -->
+		<label for="names">Saisissez votre recherche : </label>
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text" id="validatedInputGroupPrepend">
+					<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+					<span class="material-icons">science</span>
+				</span>
+			</div>
+			<input type="text" class="form-control form-control-lg" placeholder="Doliprane" [(ngModel)]="test" name="important" id="research" required>
+		</div>
+		<small id="emailHelp" class="form-text text-muted">Vous pouvez ici rechercher un médicament générique, son principe actif ou utiliser une recherche avancée</small>
+		<button clas="mt-3" type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="isCollapsed" aria-controls="collapseExample" title="Afficher/masquer la echerche avancée">Recherche avancée</button>
+		<div id="collapseExample" [ngbCollapse]="!isCollapsed" class="mt-1">
+			<app-recherche-avancee></app-recherche-avancee>
+		</div>
+		<br />
+		<button class="btn btn-success mt-3" type="submit" title="Lancer la recherche">
+			Rechercher
+			<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+				<path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z" />
+				<path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
+			</svg>
+		</button>
+		<button type="reset" class="btn btn-outline-danger mt-3 ml-1">
+			Effacer
+			<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+				<path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+				<path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+			</svg>
+		</button>
+	</form>
+</section>
+
+<app-resultat>
+	<section *ngIf="resultats">
+		<div class="row justify-content-center">
+			<div class="table-responsive col-10 ">
+				<hr />
+				<div *ngIf="resultatsNonNul; else resultat_vide">
+					<!-- Généralités -->
+					<div>
+						{{collectionSize}} 
+						<span *ngIf="resultatsMultiples; else resultat_singulier">
+							résultats trouvés.
+						</span>
+						<span #resultats_singulier>
+							résultat trouvé
+						</span>
+						
+					</div>
+					<!-- Choix de l'affichage -->
+					<div class="row justify-content-center">
+						<div class="btn-group" role="group">
+							<button class="btn btn-primary" [disabled]="active === 1" (click)="nav.select(1)">Liste</button>
+							<button class="btn btn-primary" [disabled]="active === 2" (click)="nav.select(2)">Cercles concentriques</button>
+							<button class="btn btn-primary" [disabled]="active === 3" (click)="nav.select(3)">Réseau</button>
+						</div>
+					</div>
+					<ul ngbNav #nav="ngbNav" [(activeId)]="active" (navChange)="onNavChange($event)" class="nav-tabs">
+						<li [ngbNavItem]="1">
+							<!-- Tableau -->
+							<ng-template ngbNavContent>
+								<form class="form-inline">
+									<label class="my-1 mr-2" for="inlineFormCustomSelectPref">Nombre de résultats par page : </label>
+									<select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+										<option value="10" selected>10</option>
+										<option value="20">20</option>
+										<option value="50">50</option>
+										<option value="100">tous</option>
+									</select>
+								</form>
+								Page {{ page }}. Résultats {{ ( page - 1 ) * pageSize }} à {{ page * pageSize }}.
+								<table class="table table-striped">
+									<caption class="invisible">Tableau représentant les résultats de la recherche</caption>
+									<thead>
+										<tr>
+											<th scope="col" class="text-center">
+												Dénomination
+												<span triggers="mouseenter:mouseleave" class="badge badge-secondary" container="body" placement="top" ngbPopover="Code Identifiant de Spécialité">
+													<svg style="cursor:pointer;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-info" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+														<path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588z"/>
+														<circle cx="8" cy="4.5" r="1"/>
+													</svg>
+												</span>
+												<span title="Trier par Code CIS">
+													<svg style="cursor:pointer;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+														<path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+													</svg>
+												</span>
+											</th>
+											<th scope="col" class="text-center">
+												Code CIS
+												<span title="Trier par Dénomination">
+													<svg style="cursor:pointer;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-up-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+														<path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+													</svg>
+												</span>
+											</th>
+											<th scope="col" class="text-center">
+												Forme pharmaceutique
+												<span title="Trier par Forme pharmaceutique">
+													<svg style="cursor:pointer;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-up-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+														<path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+													</svg>
+												</span>
+											</th>
+											<th scope="col" class="text-center">
+												Voies d'administration
+												<span title="Trier par Voies d'administration">
+													<svg style="cursor:pointer;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-up-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+														<path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+													</svg>
+												</span>
+											</th>
+											<th scope="col" class="text-center">
+												Statut administratif de l'<a href="https://www.ansm.sante.fr/Activites/Autorisations-de-Mise-sur-le-Marche-AMM/L-AMM-et-le-parcours-du-medicament/(offset)/3" title="Autorisation de Mise sur le Marché" target="_blank">AMM</a>
+												<span title="Trier par Statut administratif">
+													<svg style="cursor:pointer;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-up-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+														<path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+													</svg>
+												</span>
+											</th>
+											<th scope="col" class="text-center">
+												Type de procédure <a href="https://www.ansm.sante.fr/Activites/Autorisations-de-Mise-sur-le-Marche-AMM/L-AMM-et-le-parcours-du-medicament/(offset)/3" title="Autorisation de Mise sur le Marché" target="_blank">AMM</a>
+												<span title="Trier par Type de procédure">
+													<svg style="cursor:pointer;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-up-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+														<path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+													</svg>
+												</span>
+											</th>
+											<th scope="col" class="text-center">
+												État de commercialisation
+												<span title="Trier par État de commercialisation">
+													<svg style="cursor:pointer;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-up-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+														<path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+													</svg>
+												</span>
+											</th>
+											<th scope="col" class="text-center">
+												Date <a href="https://www.ansm.sante.fr/Activites/Autorisations-de-Mise-sur-le-Marche-AMM/L-AMM-et-le-parcours-du-medicament/(offset)/3" title="Autorisation de Mise sur le Marché" target="_blank">AMM</a>
+												<span title="Trier par Date">
+													<svg style="cursor:pointer;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-up-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+														<path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+													</svg>
+												</span>
+											</th>
+											<th scope="col" class="text-center">
+												Statut Bdm
+												<span title="Trier par Staut Bdm">
+													<svg style="cursor:pointer;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-up-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+														<path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+													</svg>
+												</span>
+											</th>
+											<th scope="col" class="text-center">
+												Numéro d'autorisation européenne
+												<span title="Trier par Numéro d'autorisation européenne">
+													<svg style="cursor:pointer;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-up-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+														<path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+													</svg>
+												</span>
+											</th>
+											<th scope="col" class="text-center">
+												Titulaire
+												<span title="Trier par Titulaire">
+													<svg style="cursor:pointer;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-up-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+														<path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+													</svg>
+												</span>
+											</th>
+											<th scope="col" class="text-center">
+												Surveillance renforcée
+												<span title="Trier par Surveillance renforcée">
+													<svg style="cursor:pointer;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-up-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+														<path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+													</svg>
+												</span>
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr *ngFor="let ligne of tabl | slice: (page-1) * pageSize : page * pageSize">
+											<th scope="row">{{ligne.denomination}}</th>
+											<td>{{ligne.codeCis}}</td>
+											<td>{{ligne.formePharmaceutique}}</td>
+											<td>{{ligne.voiesAdministration}}</td>
+											<td>{{ligne.statutAdministratif}}</td>
+											<td>{{ligne.typeProcedureAMM}}</td>
+											<td>{{ligne.etatDeCommercialisation}}</td>
+											<td>{{ligne.dateAMM}}</td>
+											<td>{{ligne.statutBdm}}</td>
+											<td>{{ligne.numeroAutorisationEuropeenne}}</td>
+											<td>{{ligne.titulaire}}</td>
+											<td>{{ligne.surveillanceRenforcee}}</td>
+										</tr>
+									</tbody>
+								</table>
+								<ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" class="d-flex justify-content-center"></ngb-pagination>	
+							</ng-template>
+						</li>
+						<li [ngbNavItem]="2">
+							<ng-template ngbNavContent>
+								<app-zoomable-circle-packing></app-zoomable-circle-packing>
+							</ng-template>
+						</li>
+						<li [ngbNavItem]="3">
+							<ng-template ngbNavContent>
+								<app-force-directed-graph></app-force-directed-graph>
+							</ng-template>
+						  </li>
+					  </ul>
+					  <div [ngbNavOutlet]="nav" class="mt-2"></div>
+				</div>
+				<ng-template #resultat_vide class="text-center">
+					<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-emoji-frown" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+						<path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+						<path fill-rule="evenodd" d="M4.285 12.433a.5.5 0 0 0 .683-.183A3.498 3.498 0 0 1 8 10.5c1.295 0 2.426.703 3.032 1.75a.5.5 0 0 0 .866-.5A4.498 4.498 0 0 0 8 9.5a4.5 4.5 0 0 0-3.898 2.25.5.5 0 0 0 .183.683z"/>
+						<path d="M7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z"/>
+					</svg>
+					Aucun résultat n'a été retourné.
+				</ng-template>
+			</div>
+		</div>
+	</section>	
+</app-resultat>

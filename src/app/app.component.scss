@@ -1,0 +1,6 @@
+#corpsDePage{
+	margin-top	: 80px;
+	// Pour positionner le pied de page ; Cf; : https://css-tricks.com/snippets/css/sticky-footer/
+	min-height	: calc(100vh - 160px); // 160px choisi à la louche
+	display		: block;
+}
