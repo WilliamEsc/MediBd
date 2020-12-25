@@ -97,7 +97,7 @@ export class RechercheComponent implements OnInit {
 		this.donnees.getData(query).subscribe(
 			data => {
 				toto.push(data);
-				this.tabl = toto[0].output;
+				this.tabl = toto[0].value;
 				this.resultats = true;
 				this.collectionSize = this.tabl.length;
 				if(this.tabl.length>0){

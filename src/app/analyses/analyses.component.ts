@@ -132,11 +132,17 @@ export class AnalysesComponent implements OnInit {
 	}
 
 	printOK(data) {
+
 		this.donnees.getPropPrincLab(data).subscribe(
 			data => {
 				this.updateAnalyse(data.value);
 			}
 		);
+		this.donnees.getMedocLabo(data).subscribe(
+			data => {
+				console.log(data);
+			}
+		)
 	}
 
 	getLabo() {
