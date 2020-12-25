@@ -44,8 +44,15 @@ export class DonneesService {
     return this.http.get<Data>(addrApi);
   }
 
-  getPropPrincLab(){
-    let addrApi ='/api/getPropPrincLab';
+  getLabo(){
+    let addrApi ='/api/getLabo';
     return this.http.get<Data>(addrApi);
+  }
+
+  getPropPrincLab(data=''){
+    console.log('donnees');
+    console.log(data);
+    let addrApi ='/api/getPropPrincLab';
+    return this.http.post<Data>(addrApi,{nomLabo:data});
   }
 }
