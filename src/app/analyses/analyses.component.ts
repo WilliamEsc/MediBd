@@ -132,13 +132,12 @@ export class AnalysesComponent implements OnInit {
 	}
 
 	printOK(data) {
-
 		this.donnees.getPropPrincLab(data).subscribe(
 			data => {
 				this.updateAnalyse(data.value);
 			}
 		);
-		this.donnees.getMedocLabo(data).subscribe(
+		this.donnees.getData({titulaire:data}).subscribe(
 			data => {
 				console.log(data);
 			}
@@ -146,7 +145,7 @@ export class AnalysesComponent implements OnInit {
 	}
 
 	getLabo() {
-		this.donnees.getLabo().subscribe(
+		this.donnees.getTitulaire().subscribe(
 			data => {
 				console.log(data);
 				this.updateLabo(data.value);

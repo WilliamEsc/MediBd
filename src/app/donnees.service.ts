@@ -16,17 +16,11 @@ export class DonneesService {
   getData(data) {
     let addrApi = '/api/getMedi';
     return this.http.post<Data>(addrApi,data);
-    /*     if (Object.keys(data).length > 0) {
-      addrApi += '?';
-      Object.entries(data).forEach(([key, value], index) => {
-        if (index > 0) {
-          addrApi += '&';
-        }
-        addrApi += key + '=' + value;
-      });
-    }
-    console.log(addrApi); */
-    //return this.http.get<Data>(addrApi);
+  }
+
+  getAllMedi() {
+    let addrApi = '/api/getAllMedi';
+    return this.http.get<Data>(addrApi);
   }
 
   getForme(){
@@ -44,18 +38,13 @@ export class DonneesService {
     return this.http.get<Data>(addrApi);
   }
 
-  getLabo(){
-    let addrApi ='/api/getLabo';
+  getTitulaire(){
+    let addrApi ='/api/getTitulaire';
     return this.http.get<Data>(addrApi);
-  }
-
-  getMedocLabo(data=''){
-    let addrApi = '/api/getMedi';
-    return this.http.post<Data>(addrApi,{nomLabo:data});
   }
 
   getPropPrincLab(data=''){
     let addrApi ='/api/getPropPrincLab';
-    return this.http.post<Data>(addrApi,{nomLabo:data});
+    return this.http.post<Data>(addrApi,{titulaire:data});
   }
 }
