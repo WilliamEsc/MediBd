@@ -63,15 +63,6 @@ export class AnalysesComponent implements OnInit {
 			);
 	}
 
-	private createSvgBar(): void {
-		this.svgBar = d3.select("figure#stackedBar")
-			.append("svg")
-			.attr("width", this.widthPie)
-			.attr("height", this.heightPie)
-			.attr("margin", 50)
-			.attr("pading", 50);
-	}
-
 	private createColorsPie(): void {
 		this.colorsPie = d3.scaleOrdinal()
 			.domain(this.analyse.data.map(d => d.value.toString()))
