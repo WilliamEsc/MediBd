@@ -1,4 +1,12 @@
-<button type="reset" class="btn btn-outline-danger mt-3 ml-1" (click)='getData()'>
-    analysis
-</button>
+<div class="form-select" >
+    <select class="form-control" id="exampleFormControlSelect1" #mySelect
+    (change)='printOK(mySelect.value)' >
+        <option></option>
+        <option [ngValue]="labo" id="{{labo.title}}" *ngFor="let labo of laboratoires">
+            <label for="{{labo.title}}">
+                {{labo.title}}
+            </label>
+    </select>
+</div>
 <figure id="pie"></figure>
+<figure id="stackedBar"></figure>
