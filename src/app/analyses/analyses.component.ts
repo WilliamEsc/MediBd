@@ -11,10 +11,17 @@ export type DataType = { nom: any, value: any };
 	styleUrls: ['./analyses.component.scss']
 })
 export class AnalysesComponent implements OnInit {
-	analyse = [];
+	analyse = {title:String, data:[]};
+	analyse2 = [];
 	laboratoires = [];
 	selected = {};
+	test=[
+		{date:"2015"},
+		{date:"2016"},
+		{date:"2017"}
+	]
 	private svgPie;
+	private svgBar;
 	private margin = 50;
 	private widthPie = 300;
 	private heightPie = 200;
@@ -41,9 +48,18 @@ export class AnalysesComponent implements OnInit {
 			);
 	}
 
+	private createSvgBar(): void {
+		this.svgBar = d3.select("figure#stackedBar")
+			.append("svg")
+			.attr("width", this.widthPie)
+			.attr("height", this.heightPie)
+			.attr("margin", 50)
+			.attr("pading",50);
+	}
+
 	private createColorsPie(): void {
 		this.colorsPie = d3.scaleOrdinal()
-			.domain(this.analyse[0].data.map(d => d.value.toString()))
+			.domain(this.analyse.data.map(d => d.value.toString()))
 			.range(["#2d60ae", "#2aa446"]);
 	}
 
@@ -90,29 +106,57 @@ export class AnalysesComponent implements OnInit {
 			.text(title);
 	}
 
+
+	drawBar(data) {
+
+	}
+
+	drawAxis(data) {
+		const yScale = d3.scaleLinear()
+			.range([this.heightPie, 0])
+			.domain([0, 100]);
+
+			this.svgBar.append('g')
+			.call(d3.axisLeft(yScale));
+
+		const xScale = d3.scaleBand()
+			.range([0, this.widthPie-100])
+			.domain(this.test.map((s) => s.date))
+			.padding(0.2)
+
+			this.svgBar.append('g')
+			.attr('transform', `translate(0, ${this.heightPie-100})`)
+			.call(d3.axisBottom(xScale));
+	}
+
 	updateAnalyse(data) {
-		let test = [];
 		document.getElementById('pie').innerHTML = "";
 		if (data.length == 0) {
 			return;
 		}
 		else {
 			data.forEach(element => {
-				test.push({
-					title: element.titulaire,
-					data: [
-						{ nom: 'Generique', value: element.nb_med - element.nb_princ },
-						{ nom: 'Princep', value: element.nb_princ }
-					]
-				});
+				this.analyse.title = element.titulaire;
+				this.analyse.data = [
+					{ nom:"Generique", value: element.nb_med - element.nb_princ },
+					{ nom:"Princep",value: element.nb_princ }
+				];
 			});
-			this.analyse = test;
-			this.analyse.forEach(data => {
-				this.createSvgPie();
-				this.createColorsPie();
-				this.drawPie(data.data, data.title);
-			})
+			this.createSvgPie();
+			this.createColorsPie();
+			this.drawPie(this.analyse.data, this.analyse.title);
 		}
+	}
+
+	updateAnalyse2(data) {
+		document.getElementById('stackedBar').innerHTML = "";
+		if (data.length == 0) {
+			return;
+		}
+		this.analyse2 = data;
+		this.createSvgBar();
+		this.drawAxis(data);
+		this.drawBar(data);
 	}
 
 
@@ -122,9 +166,10 @@ export class AnalysesComponent implements OnInit {
 			return;
 		}
 		else {
+			data.sort();
 			data.forEach(element => {
 				tab.push({
-					title: element.titulaire
+					title: element
 				});
 			});
 			this.laboratoires = tab;
@@ -137,9 +182,10 @@ export class AnalysesComponent implements OnInit {
 				this.updateAnalyse(data.value);
 			}
 		);
-		this.donnees.getData({titulaire:data}).subscribe(
+		this.donnees.getData({ titulaire: data }).subscribe(
 			data => {
 				console.log(data);
+				this.updateAnalyse2(data.value);
 			}
 		)
 	}
