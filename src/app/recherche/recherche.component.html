@@ -59,7 +59,7 @@
 							<button class="btn btn-primary" [disabled]="active === 3" (click)="nav.select(3)">Réseau</button>
 						</div>
 					</div>
-					<ul ngbNav #nav="ngbNav" [(activeId)]="active" (navChange)="onNavChange($event)" class="nav-tabs">
+					<ul ngbNav #nav="ngbNav" [(activeId)]="active" (navChange)="onNavChange($event)" class="nav-tabs" [destroyOnHide]="false">
 						<li [ngbNavItem]="1">
 							<!-- Tableau -->
 							<ng-template ngbNavContent>
@@ -203,12 +203,21 @@
 						</li>
 						<li [ngbNavItem]="2">
 							<ng-template ngbNavContent>
-								<app-zoomable-circle-packing></app-zoomable-circle-packing>
+								<app-zoomable-circle-packing [data]=dataZCP>
+									Grouper par : 
+									<select class="form-select" aria-label="Default select example">
+										<option selected>...</option>
+										<option value="voiesAdministration">Voie d'administration</option>
+									</select>
+									<div id="zoomableCircle"></div>
+								</app-zoomable-circle-packing>
 							</ng-template>
 						</li>
 						<li [ngbNavItem]="3">
 							<ng-template ngbNavContent>
-								<app-force-directed-graph></app-force-directed-graph>
+								<app-force-directed-graph [data]=dataFDG>
+									<div id="directedGraph"></div>
+								</app-force-directed-graph>
 							</ng-template>
 						  </li>
 					  </ul>
