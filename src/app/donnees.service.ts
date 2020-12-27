@@ -43,6 +43,11 @@ export class DonneesService {
     return this.http.get<Data>(addrApi);
   }
 
+  getPropPrincAnnee(data){
+    let addrApi ='/api/getTest';
+    return this.http.post<Data>(addrApi,data);
+  }
+
   getPropPrincLab(data=''){
     let addrApi ='/api/getPropPrincLab';
     return this.http.post<Data>(addrApi,{titulaire:data});

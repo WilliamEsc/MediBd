@@ -125,9 +125,9 @@ router.post('/getPropPrincLab', function (req, res, next) {
         });
 });
 
-router.get('/getTest', function (req, res, next) {
+router.post('/getTest', function (req, res, next) {
     specialite.aggregate([
-        { $match: { titulaire: " " + "BOIRON" } },
+        { $match: { titulaire: " " + req.body.titulaire } },
         {
             $lookup: {
                 from: groupeGenerique.collection.name,
