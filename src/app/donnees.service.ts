@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 interface Data {
   obj: Object,
-  value: Array<string>;
+  value: any;
 }
 
 @Injectable({

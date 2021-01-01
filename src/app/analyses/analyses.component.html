@@ -1,15 +1,19 @@
 <div class="form-select" >
     <select class="form-control" id="exampleFormControlSelect1" #mySelect
-    (change)='printOK(mySelect.value)' >
+    (change)='drawAnalysis(mySelect.value)' >
         <option></option>
-        <option [ngValue]="labo" id="{{labo.title}}" *ngFor="let labo of laboratoires">
+        <option [ngValue]="labo.title" id="{{labo.title}}" *ngFor="let labo of laboratoires">
             <label for="{{labo.title}}">
                 {{labo.title}}
             </label>
     </select>
 </div>
 <div class="divAnalyse">
-    <figure id="pie"></figure>
-    <figure id="stackedBar"></figure>
+        <div><h3 id="titulaire"></h3></div>
+        <figure class="figure" id="pie"></figure><figure class="figure" id="stackedBar"></figure>
+        <div class="divMedicament" *ngFor="let medoc of medicament;let index = index" (click)="printOk2(medoc.denomination,index)">
+            {{ medoc.denomination }}
+            <div class="descMedicament" id="{{ medoc.denomination }}"></div>
+        </div>
 </div>
 

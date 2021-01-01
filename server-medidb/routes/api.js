@@ -118,9 +118,8 @@ router.post('/getPropPrincLab', function (req, res, next) {
             let copy = [];
 
             docs.map(element => {
-                copy.push({ titulaire: element._id.titulaire.trim(), nb_med: element.nb_med, nb_princ: element.nb_princ });
+                copy.push({ titulaire: element._id.titulaire.trim(),data:[{nom:"Generique" ,value: element.nb_med-element.nb_princ},{nom:"Princep" ,value: element.nb_princ}]});
             })
-            console.log(docs);
             res.send({ value: copy });
         });
 });
