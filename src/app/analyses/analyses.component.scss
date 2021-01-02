@@ -4,13 +4,45 @@
   }
 
 .divAnalyse{
-  display: inline-block;
-  width: auto;
-  margin-left: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   margin-top: 5%;
 }
 
+.divFigure{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.divTitulaire{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.divMedicament{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+}
+
+.break {
+  flex-basis: 100%;
+  height: 0;
+}
+
 .figure{
-  background-color: aliceblue;
-  margin-left: 10px;
+}
+
+.pie{
+}
+
+.bar{
+}
+
+.divMedicament{
+
 }

@@ -54,6 +54,7 @@ export class AnalysesComponent implements OnInit {
 	private createSvgPie(): void {
 		this.svgPie = d3.select("figure#pie")
 			.append("svg")
+			.attr("style","background-color:aliceblue")
 			.attr("width", this.widthPie)
 			.attr("height", this.heightPie)
 			.append("g")
@@ -111,10 +112,18 @@ export class AnalysesComponent implements OnInit {
 	}
 
 	private initSvg() {
-        this.svg = d3.select("figure#stackedBar").append('svg').attr("width", 400)
-		.attr("height", 300);
 
-        this.width = 400 - this.margin.left - this.margin.right;
+
+		if(screen.width>400){
+			this.svg = d3.select("figure#stackedBar").append('svg').attr("width", 400)
+			.attr("height", 300);
+			this.width = 400 - this.margin.left - this.margin.right;
+		}else{
+			this.svg = d3.select("figure#stackedBar").append('svg').attr("width", screen.width)
+			.attr("height", 300);
+			this.width = screen.width - this.margin.left - this.margin.right;
+		}
+        this.svg.attr("style","background-color:aliceblue")
 		this.height = 300 - this.margin.top - this.margin.bottom;
 
         this.g = this.svg.append('g').attr('transform', 'translate(' + this.margin.left + ',' + this.margin.top + ')');
