@@ -1,27 +1,11 @@
-<div class="statLabo" id="statLabo">
-
-</div>
-<div class="form-select" >
-    <select class="form-control" id="exampleFormControlSelect1" #mySelect
-    (change)='drawAnalysis(mySelect.value)' >
-        <option></option>
-        <option [ngValue]="labo.titulaire" id="{{labo.titulaire}}" *ngFor="let labo of laboratoires">
-            <label for="{{labo.titulaire}}">
-                {{labo.titulaire}}
-            </label>
-    </select>
-</div>
+<app-liste-labo (nameUpdate)="drawAnalysis($event)"></app-liste-labo>
 <div class="divAnalyse">
         <div class="divTitulaire"><h3 id="titulaire"></h3></div>
         <div class="divFigure">
-            <figure class="figure " id="pie"></figure>
-            <figure class="figure bar" id="stackedBar"></figure>
+            <app-pie></app-pie>
+            <app-stacked-bar></app-stacked-bar>
         </div>
-        <div class="divMedicament" *ngFor="let medoc of medicament;let index = index" (click)="detailMedoc(medoc.denomination,index)">
-            {{ medoc.denomination }}
-            <div class="break"></div>
-            <div class="descMedicament" id="{{ medoc.denomination }}"></div>
-        </div>
+        <app-liste-medicament-labo></app-liste-medicament-labo>
 </div>
 
 

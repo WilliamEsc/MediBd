@@ -18,6 +18,10 @@ import { BodyComponent } from './body/body.component';
 import { AnalysesComponent } from './analyses/analyses.component';
 import { ForceDirectedGraphComponent } from './force-directed-graph/force-directed-graph.component';
 import { ZoomableCirclePackingComponent } from './zoomable-circle-packing/zoomable-circle-packing.component';
+import { PieComponent } from './pie/pie.component';
+import { StackedBarComponent } from './stacked-bar/stacked-bar.component';
+import { ListeMedicamentLaboComponent } from './liste-medicament-labo/liste-medicament-labo.component';
+import { ListeLaboComponent } from './liste-labo/liste-labo.component';
 
 @NgModule({
 	declarations: [
@@ -25,7 +29,7 @@ import { ZoomableCirclePackingComponent } from './zoomable-circle-packing/zoomab
 		HeaderComponent,
 		FooterComponent,
 		RechercheComponent,
-		RechercheAvanceeComponent,NgbdDatepickerI18n, AppAreaChartComponent, ResultatComponent, BodyComponent, AnalysesComponent, ForceDirectedGraphComponent, ZoomableCirclePackingComponent
+		RechercheAvanceeComponent,NgbdDatepickerI18n, AppAreaChartComponent, ResultatComponent, BodyComponent, AnalysesComponent, ForceDirectedGraphComponent, ZoomableCirclePackingComponent, PieComponent, StackedBarComponent, ListeMedicamentLaboComponent, ListeLaboComponent
 	],
 	imports: [
 		BrowserModule,
