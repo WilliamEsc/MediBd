@@ -44,7 +44,7 @@ export class DonneesService {
   }
 
   getPropPrincAnnee(data){
-    let addrApi ='/api/getTest';
+    let addrApi ='/api/getPropPrincAnnee';
     return this.http.post<Data>(addrApi,data);
   }
 

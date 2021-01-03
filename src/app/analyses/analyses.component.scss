@@ -34,15 +34,15 @@
   height: 0;
 }
 
-.figure{
+.descMedicament{
+  width: 400px;
 }
 
-.pie{
+.descRow{
+  background-color: aqua;
 }
 
-.bar{
-}
-
-.divMedicament{
-
+.descCell{
+  display: flex;
+  flex-direction: row;
 }

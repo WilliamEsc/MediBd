@@ -10,7 +10,7 @@ const proportionPrincep = require("../models/proportionPrinceps");
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', async function () {
-    /*
+    
     db.db.listCollections().toArray(function (err, names) {
         if (err) {
             console.log(err);
@@ -54,7 +54,7 @@ db.once('open', async function () {
             let copy = [];
 
             docs.map(element => {
-                copy.push({ titulaire: element._id.titulaire.trim(), nb_med: element.nb_med, nb_princ: element.nb_princ });
+                copy.push({ titulaire: element._id.titulaire.trim(),data:[{nom:"Generique" ,value: element.nb_med-element.nb_princ},{nom:"Princep" ,value: element.nb_princ}]});
             })
 
             return copy;
@@ -70,7 +70,7 @@ db.once('open', async function () {
             if (err) throw err;
             console.log("donnees insere");
         });
-    });*/
+    });
 
     console.log("connection ready");
 });
@@ -90,7 +90,7 @@ router.get('/getTitulaire', function (req, res, next) {
     });
 });
 
-router.post('/getPropPrincLab', function (req, res, next) {
+/*router.post('/getPropPrincLab', function (req, res, next) {
     specialite.aggregate([
         { $match: { titulaire: " " + req.body.titulaire } },
         {
@@ -122,9 +122,9 @@ router.post('/getPropPrincLab', function (req, res, next) {
             })
             res.send({ value: copy });
         });
-});
+});*/
 
-router.post('/getTest', function (req, res, next) {
+router.post('/getPropPrincAnnee', function (req, res, next) {
     specialite.aggregate([
         { $match: { titulaire: " " + req.body.titulaire } },
         {
@@ -173,16 +173,21 @@ router.post('/getTest', function (req, res, next) {
         });
 });
 
-/*router.post('/getPropPrincLab', function (req, res, next) {
-    proportionPrincep.find({ titulaire: req.body.titulaire }, function (err, data) {
+router.post('/getPropPrincLab', function (req, res, next) {
+    let find={};
+    if(req.body.titulaire){
+        find={titulaire: req.body.titulaire}
+    }
+    proportionPrincep.find(find, function (err, data) {
         if (err) throw err;
         if (data.length === 0) {
             res.status(404).send('no data found');
             return;
         }
+        
         res.send({ value: data });
     });
-});*/
+});
 
 router.post('/getMedi', function (req, res, next) {
     const pageOptions = {
