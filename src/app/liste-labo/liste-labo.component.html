@@ -5,7 +5,7 @@
     <select class="form-control" id="exampleFormControlSelect1" #mySelect
     (change)="updateParent(mySelect.value)" >
         <option></option>
-        <option [ngValue]="labo.titulaire" id="{{labo.titulaire}}" *ngFor="let labo of laboratoires">
+        <option id="{{labo.titulaire}}" *ngFor="let labo of laboratoires">
             <label for="{{labo.titulaire}}">
                 {{labo.titulaire}}
             </label>

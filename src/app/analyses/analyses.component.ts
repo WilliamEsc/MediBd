@@ -18,6 +18,8 @@ export class AnalysesComponent implements OnInit {
 	@ViewChild(ListeMedicamentLaboComponent) childListeM:ListeMedicamentLaboComponent;
 	@ViewChild(ListeLaboComponent) childListeL:ListeLaboComponent;
 
+	titre="";
+
 	constructor(private donnees: DonneesService) {
 
 	}
@@ -27,7 +29,7 @@ export class AnalysesComponent implements OnInit {
 	}
 
 	drawAnalysis(select) {
-		document.getElementById('titulaire').innerHTML = select;
+		this.titre=select;
 		this.childPie.reset();
 		this.childBar.reset();
 		this.childListeM.reset();
@@ -42,7 +44,7 @@ export class AnalysesComponent implements OnInit {
 					this.childBar.constructStackedBarChart(data.value);
 				}
 			);
-			this.donnees.getData({ titulaire: select }).subscribe(
+			this.donnees.getDescMedicamentTitulaire({ titulaire: select }).subscribe(
 				data => {
 					this.childListeM.updateMedicament(data.value);
 				}

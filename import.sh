@@ -1,5 +1,5 @@
 # Nom de la base
-BASE=test
+BASE=mediBD
 
 # Collections
 COLLECTIONS=(specialites presentation composition avis_SMR_de_la_HAS avis_ASMR_de_la_HAS avis_CT_de_la_HAS groupes_generiques condition_prescription_et_delivrance infos_importantes)

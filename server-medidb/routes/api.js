@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost/test", { useNewUrlParser: true });
+mongoose.connect("mongodb://localhost/mediBD", { useNewUrlParser: true });
 const { specialite, composition, presentation, avisASMR, avisCT, avisSMR, infosImportantes, conditionPrescDeliv } = require("../models/scheme");
 const groupeGenerique = require("../models/groupeGenerique");
 const proportionPrincep = require("../models/proportionPrinceps");
@@ -47,16 +47,19 @@ db.once('open', async function () {
         .group({
             _id: { titulaire: "$titulaire" },
             nb_med: { $sum: 1 },
-            nb_princ: { $sum: { "$cond": [{ "$eq": ["$gene.typeGenerique", 0] }, 1, 0] } }
+            nb_princ: { $sum: { "$cond": [{ "$eq": ["$gene.typeGenerique", 0] }, 1, 0] } },
+            nb_gene: { $sum: { "$cond": [{ "$gt": ["$gene.typeGenerique", 0] }, 1, 0] } }
         })
         .exec()
         .then(docs => {
             let copy = [];
 
             docs.map(element => {
-                copy.push({ titulaire: element._id.titulaire.trim(),data:[{nom:"Generique" ,value: element.nb_med-element.nb_princ},{nom:"Princep" ,value: element.nb_princ}]});
+                copy.push({ titulaire: element._id.titulaire.trim(),
+                    data:[{nom:"Generique" ,value: element.nb_gene},
+                    {nom:"Princep" ,value: element.nb_princ},
+                    {nom:"Autre" ,value: element.nb_med-element.nb_princ-element.nb_gene}]});
             })
-
             return copy;
         });
 
@@ -90,7 +93,7 @@ router.get('/getTitulaire', function (req, res, next) {
     });
 });
 
-/*router.post('/getPropPrincLab', function (req, res, next) {
+router.post('/test',function(req,res,next){
     specialite.aggregate([
         { $match: { titulaire: " " + req.body.titulaire } },
         {
@@ -106,23 +109,21 @@ router.get('/getTitulaire', function (req, res, next) {
                 "path": "$gene",
                 "preserveNullAndEmptyArrays": true
             }
+        },
+        {
+            $lookup: {
+                from: composition.collection.name,
+                localField: "codeCis",
+                foreignField: "codeCis",
+                as: "compo"
+            }
         }
     ])
-        .group({
-            _id: { titulaire: "$titulaire" },
-            nb_med: { $sum: 1 },
-            nb_princ: { $sum: { "$cond": [{ "$eq": ["$gene.typeGenerique", 0] }, 1, 0] } }
-        })
         .exec()
         .then(docs => {
-            let copy = [];
-
-            docs.map(element => {
-                copy.push({ titulaire: element._id.titulaire.trim(),data:[{nom:"Generique" ,value: element.nb_med-element.nb_princ},{nom:"Princep" ,value: element.nb_princ}]});
-            })
-            res.send({ value: copy });
+            res.send({ value: docs });
         });
-});*/
+});
 
 router.post('/getPropPrincAnnee', function (req, res, next) {
     specialite.aggregate([
@@ -149,15 +150,21 @@ router.post('/getPropPrincAnnee', function (req, res, next) {
             docs.map(element => {
                 let date = element.dateAMM.split('/');
                 if (!ret.some(e => e.annee === date[2])) {
-                    if (element.gene && element.gene.typeGenerique == 0) {
-                        ret.push({ annee: date[2], princep: 1, generique: 0 });
+                    if(!element.gene){
+                        ret.push({ annee: date[2], princep: 0, generique: 0,autre: 1 });
+                    }
+                    else if (element.gene && element.gene.typeGenerique == 0) {
+                        ret.push({ annee: date[2], princep: 1, generique: 0,autre: 0 });
                     } else {
-                        ret.push({ annee: date[2], princep: 0, generique: 1 });
+                        ret.push({ annee: date[2], princep: 0, generique: 1,autre: 0 });
                     }
                 } else {
                     ret.some(e => {
                         if (e.annee === date[2]) {
-                            if (element.gene && element.gene.typeGenerique == 0) {
+                            if(!element.gene){
+                                e.autre++;
+                            }
+                            else if (element.gene.typeGenerique == 0) {
                                 e.princep++;
                             } else {
                                 e.generique++;
