@@ -43,10 +43,10 @@
 					<!-- Généralités -->
 					<div>
 						{{collectionSize}} 
-						<span *ngIf="resultatsMultiples; else resultat_singulier">
+						<span *ngIf="resultatsMultiples">
 							résultats trouvés.
 						</span>
-						<span #resultats_singulier>
+						<span *ngIf="!resultatsMultiples">
 							résultat trouvé
 						</span>
 						
@@ -204,11 +204,24 @@
 						<li [ngbNavItem]="2">
 							<ng-template ngbNavContent>
 								<app-zoomable-circle-packing [data]=dataZCP>
-									Grouper par : 
-									<select class="form-select" aria-label="Default select example">
-										<option selected>...</option>
-										<option value="voiesAdministration">Voie d'administration</option>
-									</select>
+									<div class="row">
+										<div class="col col-4">
+											<span class="d-inline">Grouper par : </span>
+											<select id="critere1" (change)="resultatToZCP()" class="custom-select d-inline" aria-label="Default select example">
+												<option value="0" selected>...</option>
+												<option *ngFor="let choix of menusZCP" value="{{choix[0]}}">{{choix[1]}}</option>
+											</select>
+										</div>
+										<div class="col col-4">
+											<div *ngIf="affichageMenusZCP[0]" class="d-inline">
+												<span class="d-inline">puis par : </span>
+												<select id="critere2" (change)="resultatToZCP(1)" class="custom-select d-inline" aria-label="Default select example">
+													<option value="0" selected>...</option>
+													<option *ngFor="let choix of menusZCP" value="{{choix[0]}}">{{choix[1]}}</option>
+												</select>
+											</div>
+										</div>
+									</div>
 									<div id="zoomableCircle"></div>
 								</app-zoomable-circle-packing>
 							</ng-template>
