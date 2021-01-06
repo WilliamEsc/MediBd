@@ -93,7 +93,7 @@ router.get('/getTitulaire', function (req, res, next) {
     });
 });
 
-router.post('/test',function(req,res,next){
+router.post('/DescMedicamentTitulaire',function(req,res,next){
     specialite.aggregate([
         { $match: { titulaire: " " + req.body.titulaire } },
         {
@@ -197,10 +197,10 @@ router.post('/getPropPrincLab', function (req, res, next) {
 });
 
 router.post('/getMedi', function (req, res, next) {
-    const pageOptions = {
+/*     const pageOptions = {
         page: parseInt(req.body.page, 10) || 0,
         limit: parseInt(req.body.limit, 10) || 100
-    }
+    } */
     Object.entries(req.body).forEach(([key, value]) => {
         console.log(key + ' : ' + value);
     });
@@ -219,7 +219,7 @@ router.post('/getMedi', function (req, res, next) {
             return;
         }
         res.send({ value: data });
-    }).limit(pageOptions.limit).skip(pageOptions.limit * pageOptions.page);
+    });//.limit(pageOptions.limit).skip(pageOptions.limit * pageOptions.page);
 });
 
 router.get('/getAllMedi', function (req, res, next) {
