@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { Runtime, Inspector } from "../force-directed-graph/runtime.js";
 
 @Component({
@@ -6,14 +6,23 @@ import { Runtime, Inspector } from "../force-directed-graph/runtime.js";
 	templateUrl: './zoomable-circle-packing.component.html',
 	styleUrls: ['./zoomable-circle-packing.component.scss']
 })
-export class ZoomableCirclePackingComponent implements OnInit {
+export class ZoomableCirclePackingComponent implements OnInit, OnChanges{
 	@Input() data: any;
 	constructor(){}
 	ngOnInit(): void {}
 
+
+	ngOnChanges() {
+		this.initialisation();
+	}
+
+
+
 	main;
 
-	toto = setTimeout(() => {
+	toto = setTimeout(() => this.initialisation(), 500);
+
+	initialisation(){
 		this.main = new Runtime().module(define, name=> {
 			if(name === "chart"){
 				return new Inspector(document.getElementById('zoomableCircle'));
@@ -25,7 +34,7 @@ export class ZoomableCirclePackingComponent implements OnInit {
 			// it will update in the element previously given to the Inspector above
 			this.main.redefine("data", this.data)
 		  }, 500)
-	}, 500);
+	}
 }
 
 // Cf. https://observablehq.com/@d3/zoomable-circle-packing
@@ -63,7 +72,7 @@ export function define(runtime, observer){
 				.on("click", (event, d) => focus !== d && (zoom(event, d), event.stopPropagation()));
 
 			const label = svg.append("g")
-				.style("font", "10px sans-serif")
+				.style("font", "8px sans-serif")
 				.attr("pointer-events", "none")
 				.attr("text-anchor", "middle")
 				.selectAll("text")
