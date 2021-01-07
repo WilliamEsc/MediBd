@@ -1,13 +1,23 @@
-.divMedicament{
-    width: 400px;
+.listeMedicament{
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
     text-align: center;
+}
+
+.divMedicament{
+    width: 400px;
+    align-self: center;
   }
 
   .descMedicament{
     width: 400px;
+  }
+
+  @media (max-width: 400px) {
+    .divMedicament{ width: 90%; }
+    .descMedicament{ width: 100%; }
   }
   
   .descRow{

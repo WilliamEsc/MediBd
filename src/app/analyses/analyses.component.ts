@@ -29,26 +29,32 @@ export class AnalysesComponent implements OnInit {
 	}
 
 	drawAnalysis(select) {
-		this.titre=select;
-		this.childPie.reset();
-		this.childBar.reset();
-		this.childListeM.reset();
-		if(select != ""){
-			this.childListeL.laboratoires.map(element => {
-				if (element.titulaire == select){
-					this.childPie.constructPieChart(element);
-				}
-			})
-			this.donnees.getPropPrincAnnee({ titulaire: select }).subscribe(
-				data => {
-					this.childBar.constructStackedBarChart(data.value);
-				}
-			);
-			this.donnees.getDescMedicamentTitulaire({ titulaire: select }).subscribe(
-				data => {
-					this.childListeM.updateMedicament(data.value);
-				}
-			)
+		if(select){
+			document.getElementById('divAnalyse').setAttribute('class','divAnalyse bg-dark');
+			this.titre=select;
+			this.childPie.reset();
+			this.childBar.reset();
+			this.childListeM.reset();
+			if(select != ""){
+				this.childListeL.laboratoires.map(element => {
+					if (element.titulaire == select){
+						this.childPie.constructPieChart(element);
+					}
+				})
+				this.donnees.getPropPrincAnnee({ titulaire: select }).subscribe(
+					data => {
+						this.childBar.constructStackedBarChart(data.value);
+					}
+				);
+				this.donnees.getDescMedicamentTitulaire({ titulaire: select }).subscribe(
+					data => {
+						this.childListeM.updateMedicament(data.value);
+					}
+				)
+			}
+		}else{
+			document.getElementById('divAnalyse').setAttribute('class','divAnalyse d-none');
+
 		}
 	}
 

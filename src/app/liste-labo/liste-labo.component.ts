@@ -32,7 +32,7 @@ export class ListeLaboComponent implements OnInit {
 	}
 
 	calculStatLabo() {
-		console.log(this.laboratoires);
+		//console.log(this.laboratoires);
 		let nbMedi = 0;
 		let nbMin = 0;
 		let nbGene = 0;

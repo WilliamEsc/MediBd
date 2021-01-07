@@ -1,6 +1,6 @@
 <app-liste-labo (nameUpdate)="drawAnalysis($event)"></app-liste-labo>
-<div class="divAnalyse">
-        <div class="divTitulaire"><h3 id="titulaire" [innerHTML]="titre"></h3></div>
+<div class="divAnalyse d-none" id="divAnalyse">
+        <div class="divTitulaire"><h3 id="titulaire" class="text-light" [innerHTML]="titre"></h3></div>
         <div class="divFigure">
             <app-pie></app-pie>
             <app-stacked-bar></app-stacked-bar>

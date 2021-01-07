@@ -7,7 +7,39 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-top: 5%;
+  margin-top: 1%;
+  margin-left: 25%;
+  margin-right: 25%;
+}
+@media (max-width: 1480px) {
+  .divAnalyse{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 1%;
+    margin-left: 15%;
+    margin-right: 15%;
+  }
+}
+@media (max-width: 720px) {
+  .divAnalyse{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 1%;
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+}
+@media (max-width: 400px) {
+  .divAnalyse{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 1%;
+    margin-left: 0%;
+    margin-right: 0%;
+  }
 }
 
 .divFigure{
@@ -20,29 +52,4 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-}
-
-.divMedicament{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  text-align: center;
-}
-
-.break {
-  flex-basis: 100%;
-  height: 0;
-}
-
-.descMedicament{
-  width: 400px;
-}
-
-.descRow{
-  background-color: aqua;
-}
-
-.descCell{
-  display: flex;
-  flex-direction: row;
 }

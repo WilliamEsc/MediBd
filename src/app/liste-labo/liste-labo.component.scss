@@ -1,0 +1,38 @@
+.divLabo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 1%;
+    margin-left: 25%;
+    margin-right: 25%;
+  }
+  @media (max-width: 1480px) {
+    .divLabo{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-top: 1%;
+      margin-left: 15%;
+      margin-right: 15%;
+    }
+  }
+  @media (max-width: 720px) {
+    .divLabo{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-top: 1%;
+      margin-left: 5%;
+      margin-right: 5%;
+    }
+  }
+  @media (max-width: 400px) {
+    .divLabo{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-top: 1%;
+      margin-left: 0%;
+      margin-right: 0%;
+    }
+  }
