@@ -90,7 +90,7 @@ const infosImportantesSchema = schema({
 
 const specialite = mongoose.model("specialite", specialiteSchema);
 const presentation = mongoose.model("presentation", presentationSchema);
-const composition = mongoose.model("composition", compositionSchema);
+const composition = mongoose.model("composition", compositionSchema,"composition");
 const avisSMR = mongoose.model("avis_SMR_de_la_HAS", avisSMRSchema);
 const avisASMR = mongoose.model("avis_ASMR_de_la_HAS", avisASMRSchema);
 const avisCT = mongoose.model("avis_CT_de_la_HAS", avisCTSchema);

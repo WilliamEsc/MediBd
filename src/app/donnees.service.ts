@@ -48,6 +48,11 @@ export class DonneesService {
     return this.http.post<Data>(addrApi,data);
   }
 
+  getDescMedicamentTitulaire(data){
+    let addrApi ='/api/DescMedicamentTitulaire';
+    return this.http.post<Data>(addrApi,data);
+  }
+
   getPropPrincLab(data=''){
     let addrApi ='/api/getPropPrincLab';
     return this.http.post<Data>(addrApi,{titulaire:data});

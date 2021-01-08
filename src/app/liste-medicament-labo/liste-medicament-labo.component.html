@@ -1,5 +1,7 @@
-<div class="divMedicament" *ngFor="let medoc of medicament;let index = index" (click)="detailMedoc(medoc.denomination,index)">
+<div class="listeMedicament">
+<div class="divMedicament {{medoc.class}} border border-dark" *ngFor="let medoc of medicament;let index = index" (click)="detailMedoc(medoc.denomination,index)">
     {{ medoc.denomination }}
     <div class="break"></div>
-    <div class="descMedicament" id="{{ medoc.denomination }}"></div>
+    <div class="descMedicament" id="{{ medoc.denomination }}" ></div>
+</div>
 </div>

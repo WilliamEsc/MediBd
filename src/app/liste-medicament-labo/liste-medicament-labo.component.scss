@@ -1,12 +1,23 @@
-.divMedicament{
+.listeMedicament{
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
     text-align: center;
+}
+
+.divMedicament{
+    width: 400px;
+    align-self: center;
   }
 
   .descMedicament{
     width: 400px;
+  }
+
+  @media (max-width: 400px) {
+    .divMedicament{ width: 90%; }
+    .descMedicament{ width: 100%; }
   }
   
   .descRow{
@@ -21,4 +32,19 @@
   .break {
     flex-basis: 100%;
     height: 0;
+  }
+
+  .autre{
+    color: black;
+    background-color:#9cb61a;
+  }
+
+  .Generique{
+    color: black;
+    background-color: #2aa446;
+  }
+
+  .Princep{
+    color: black;
+    background-color: #2d60ae;
   }

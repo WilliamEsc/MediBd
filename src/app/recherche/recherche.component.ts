@@ -450,7 +450,7 @@ export class RechercheComponent implements OnInit {
 		this.donnees.getData(query).subscribe(
 			data => {
 				toto = data;								// Récupération des données dans un Object pour 
-				this.tabl = toto.output;					// accéder sans erreur de compilation à son membre .output
+				this.tabl = toto.value;					// accéder sans erreur de compilation à son membre .value
 				this.resultats = true;
 				this.collectionSize = this.tabl.length;
 				if(this.tabl.length>0){

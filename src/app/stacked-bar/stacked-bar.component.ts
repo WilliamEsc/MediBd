@@ -62,30 +62,36 @@ export class StackedBarComponent implements OnInit {
 	}
 
 	drawBar(data: any[]) {
-		let keys;
-		let boolGen = false;
-		let boolPrinc = false;
+		let keys=[];
+		let color=[];
+		let boolGen=false;
+		let boolPrin=false;
+		let boolAutre=false;
 		data.map(d => {
 			if (d.generique > 0) {
-				boolGen = true;
+				boolGen=true;
 			}
 			if (d.princep > 0) {
-				boolPrinc = true;
+				boolPrin=true;
+			}
+			if (d.autre > 0) {
+				boolAutre=true;
 			}
 		});
-		if (boolGen && boolPrinc) {
-			this.z = d3Scale.scaleOrdinal()
-				.range(["#2d60ae", "#2aa446"]);
-			keys = ["generique", "princep"];
-		} else if (boolGen) {
-			this.z = d3Scale.scaleOrdinal()
-				.range(["#2d60ae"]);
-			keys = ["generique"];
-		} else {
-			this.z = d3Scale.scaleOrdinal()
-				.range(["#2aa446"]);
-			keys = ["princep"];
+		if(boolAutre){
+			keys.push("autre");
+			color.push("#9cb61a");
 		}
+		if(boolGen){
+			keys.push("generique");
+			color.push("#2d60ae");
+		}
+		if(boolPrin){
+			keys.push("princep");
+			color.push("#2aa446");
+		}
+			this.z = d3Scale.scaleOrdinal()
+				.range(color);
 
 		data = data.map(v => {
 			v.total = keys.map(key => v[key]).reduce((a, b) => a + b, 0);

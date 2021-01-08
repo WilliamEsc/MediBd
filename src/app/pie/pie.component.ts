@@ -35,15 +35,10 @@ export class PieComponent implements OnInit {
 	}
 
 	private createColorsPie(data): void {
-		let color = [];
-		if (data[0].value > 0) {
-			color.push("#2d60ae");
-		}
-		if (data[1].value > 0) {
-			color.push("#2aa446");
-		}
+		let color = ["#2d60ae","#2aa446","#9cb61a"];
+		let name=[data[0].nom,data[1].nom,data[2].nom];
 		this.colorsPie = d3.scaleOrdinal()
-			.domain(data.map(d => d.value.toString()))
+			.domain(name)
 			.range(color);
 	}
 
