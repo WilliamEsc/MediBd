@@ -221,6 +221,15 @@
 												</select>
 											</div>
 										</div>
+										<div class="col col-4">
+											<div *ngIf="affichageMenusZCP[1]" class="d-inline">
+												<span class="d-inline">puis par : </span>
+												<select id="critere3" (change)="resultatToZCP(2)" class="custom-select d-inline" aria-label="Default select example">
+													<option value="0" selected>...</option>
+													<option *ngFor="let choix of menusZCP" value="{{choix[0]}}">{{choix[1]}}</option>
+												</select>
+											</div>
+										</div>
 									</div>
 									<div id="zoomableCircle"></div>
 								</app-zoomable-circle-packing>

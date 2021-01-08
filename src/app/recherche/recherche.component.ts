@@ -468,6 +468,7 @@ export class RechercheComponent implements OnInit {
 	resultatToZCP(appelSelecteur=0){ // Renvois les données dans un format JSON adapté au graphique en cercles concentriques zoomables.
 		let longeurMinNom		= 5;	// Longueur minimum des noms affichées.
 		let minGrandeFratrie	= 30;	// Valeur à partir de laquelle les noms d'une fratrie doivent être raccourcis pour la lisibilité. 
+		let maxCarNom			= 10;	// Maximum de caractères dans un nom de fils nullipare.
 
 		// Chargement des critéres de tris des <select>.
 		let criteres = Array();
@@ -476,6 +477,9 @@ export class RechercheComponent implements OnInit {
 		}
 		if(document.getElementById('critere2') != null){
 			criteres[1] = (<HTMLInputElement>document.getElementById('critere2')).value;
+		}
+		if(document.getElementById('critere3') != null){
+			criteres[2] = (<HTMLInputElement>document.getElementById('critere3')).value;
 		}
 		// Copie des données retournées par la requête pour éviter les effets de bord.
 		let data = this.tabl;
@@ -513,25 +517,18 @@ export class RechercheComponent implements OnInit {
 			// Traitement des données
 			do{
 				// Ajout des des petits-enfant de la racine
-				let nameRetourEnfant;
-				if(criteres[0] == 'dateAMM'){ // Formattage de la date si le critère en est une.
-					nameRetourEnfant = new Date(data[0][criteres[0]].substr(0, 10));
-					if(nameRetourEnfant == 'Invalid Date'){
-						nameRetourEnfant = 'Date non renseignée';
-					}else{
-						nameRetourEnfant = nameRetourEnfant.toLocaleDateString('fr-FR', {year: 'numeric', month: 'long', day: 'numeric' });
-					}
-				}else{
-					nameRetourEnfant = data[0][criteres[0]];
-				}
 				let retourEnfant = {
-					"name" : nameRetourEnfant,
-					"children" : []
+					"name" : this.formatNameCercle(data[0][criteres[0]], criteres[0]),
+					"children" : [],
+					"childrenTemp" : []
 				};
 				let aSupprimer = Array();
 				for(let i=0; i<data.length; i++){
-					if(data[i][criteres[0]]===data[0][criteres[0]] && data[i][criteres[0]] != undefined){ 
-						retourEnfant.children.push({"name" : data[i].denomination, "value" : data[i].codeCis});
+					if(data[i][criteres[0]]===data[0][criteres[0]] && data[i][criteres[0]] != undefined){
+						if(data[i][criteres[1]]==undefined){
+							data[i][criteres[1]]='';
+						}
+						retourEnfant.children.push({"name" : data[i].denomination, "value" : data[i].codeCis, "critere1" : data[i][criteres[1]]});
 						aSupprimer.push(i);
 					}else if(data[i][criteres[0]]==undefined){ // Mise en fratrie des élèment ne possédant pas le critère.
 						data[i][criteres[0]]="";
@@ -545,13 +542,62 @@ export class RechercheComponent implements OnInit {
 					}
 				}
 				// Raccourcissement des noms trops long si la fratrie est trop grande pour la clarté de lecture.
-				if(retourEnfant.children.length>minGrandeFratrie){
+				if(retourEnfant.children.length>minGrandeFratrie && criteres[1]==undefined){
 					for(let i=0; i<retourEnfant.children.length; i++){
 						if(retourEnfant.children[i].name.search(' ')<longeurMinNom){ // Pas de raccourcissement de moins de 5 caractères.
 							retourEnfant.children[i].name = retourEnfant.children[i].name.slice(0, longeurMinNom);
 						}else{
 							retourEnfant.children[i].name = retourEnfant.children[i].name.slice(0, retourEnfant.children[i].name.search(' '));
 						}
+					}
+				}else if(criteres[1]==undefined){
+					for(let i=0; i<retourEnfant.children.length; i++){
+						retourEnfant.children[i].name = retourEnfant.children[i].name.slice(0, maxCarNom);
+					}
+				}
+
+				// Traitement de niveau 2
+				if(criteres[1]!=undefined && criteres[1]!= 0 && retourEnfant.children[0]['critere1']!=undefined){
+					do{
+						let retourPetitEnfant = {
+							"name" : this.formatNameCercle(retourEnfant.children[0]['critere1'], criteres[1]),
+							"children" : []
+						}
+						let aSupprimer2 = Array();
+						for(let i=0; i<retourEnfant.children.length; i++){
+							if(retourEnfant.children[i]['critere1']===retourEnfant.children[0]['critere1'] && retourEnfant.children[i]['critere1'] != undefined){ 
+								retourPetitEnfant.children.push({"name" : retourEnfant.children[i]['name'], "value" : retourEnfant.children[i]['value']});
+								aSupprimer2.push(i);
+							}else if(retourEnfant.children[i]['critere1']==undefined){ // Mise en fratrie des élèment ne possédant pas le critère.
+								retourEnfant.children[i]['critere1']="";
+							}
+						}
+						// Supression des données déjà ajoutées
+						let dataTemp2 = Array();
+						for(let i=0; i<retourEnfant.children.length; i++){
+							if(!aSupprimer2.includes(i)){
+								dataTemp2.push(retourEnfant.children[i]);
+							}
+						}
+						retourEnfant.children = dataTemp2;
+						// Raccourcissement des noms trops long si la fratrie est trop grande pour la clarté de lecture.
+						if(retourPetitEnfant.children.length>minGrandeFratrie && criteres[2]==undefined){
+							for(let i=0; i<retourPetitEnfant.children.length; i++){
+								if(retourPetitEnfant.children[i].name.search(' ')<longeurMinNom){ // Pas de raccourcissement de moins de 5 caractères.
+									retourPetitEnfant.children[i].name = retourPetitEnfant.children[i].name.slice(0, longeurMinNom);
+								}else{
+									retourPetitEnfant.children[i].name = retourPetitEnfant.children[i].name.slice(0, retourPetitEnfant.children[i].name.search(' '));
+								}
+							}
+						}else if(criteres[2]==undefined){
+							for(let i=0; i<retourPetitEnfant.children.length; i++){
+								retourPetitEnfant.children[i].name = retourPetitEnfant.children[i].name.slice(0, maxCarNom);
+							}
+						}
+						retourEnfant.childrenTemp.push(retourPetitEnfant);
+					}while(retourEnfant.children.length>0);
+					for(let i=0; i<retourEnfant.childrenTemp.length; i++){
+						retourEnfant.children.push(retourEnfant.childrenTemp[i]);
 					}
 				}
 				data = dataTemp;
@@ -561,7 +607,7 @@ export class RechercheComponent implements OnInit {
 			this.affichageMenusZCP[0]=false;
 		}
 
-		// Ajout des enfants à la racine
+		// Ajout des enfants nullipares à la racine
 		for(let i=0; i<data.length; i++){
 			let name = String(data[i].denomination);
 			let ajout;
@@ -574,5 +620,25 @@ export class RechercheComponent implements OnInit {
 			retour.children.push(ajout);
 		}
 		this.dataZCP = retour;
+	}
+
+	formatNameCercle(nom, critere){ // Renvoie un nom de cercle lisible par un utilisateur à partir de la donnée brute.
+		nom = String(nom); // Pour éviter l'appel de la méthode .indexOf sur un Number.
+		let nomFormatte;
+		if(critere == 'dateAMM'){ // Formattage de la date si le critère en est une.
+			nomFormatte = new Date(nom.substr(0, 10));
+			if(nomFormatte == 'Invalid Date'){
+				nomFormatte = 'Date non renseignée';
+			}else{
+				nomFormatte = nomFormatte.toLocaleDateString('fr-FR', {year: 'numeric', month: 'long', day: 'numeric' });
+			}
+		}else if(nom.indexOf(';') != -1){ // Présentation française des listes.
+			nomFormatte = nom.split(';').join(', ');
+			nomFormatte = nomFormatte.replace(/[,]([^,]+$)/, ' et $1');
+
+		}else{
+			nomFormatte = nom;
+		}
+		return nomFormatte;
 	}
 }
