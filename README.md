@@ -1,10 +1,30 @@
-# MonProjetAngular
+# mediBD Sujet RC1
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.2.
+11810159 MATHIEU ALLARD-FRANCILLON
+11811574 ALI MESSELMANI
+11702268 WILLIAM ESCRIVA
 
-## Development server
+# Objectif
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Nous avions pour Objectif de créer un explorable interactif avec des données trouvés sur le net.
+
+Nous avons choisis pour données celle fournis par la base de données publique des médicaments (http://base-donnees-publique.medicaments.gouv.fr/).
+
+Afin de réaliser notre site nous utilisons le MEAN STACK
+    -MONGODB, pour la base de donnée (back-end)
+    -EXPRESS.JS, framework de NODE.JS
+    -ANGULAR, framework de Javascript (front-end)
+    -NODE.JS, Pour le serveur (middleware)
+
+
+## Installation
+
+Il est nécessaire de disposer de:
+    -npm
+    -nodejs
+    -angular
+    -mongodb
+
 
 ## Code scaffolding
 
