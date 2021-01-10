@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const schema = mongoose.Schema;
 const objectId = mongoose.ObjectId;
 
-schema.Types.String.set('trim', true);
+//schema.Types.String.set('trim', true);
 
 const groupeGeneriqueSchema = schema({
     id: objectId,

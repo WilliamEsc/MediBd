@@ -28,17 +28,17 @@ export class ListeMedicamentLaboComponent implements OnInit {
 		}
 		else {
 			data.forEach(element => {
-				let obj={class: "autre"};
 				if(element.gene){
 					if(element.gene.typeGenerique==0){
-						obj.class="Generique";
+						this.medicament.push({...element,class:"Generique"});
 					}else{
-						obj.class="Princep";
+						this.medicament.push({...element,class:"Princep"});
 					}
+				}else{
+					this.medicament.push({...element,class:"autre"});
 				}
-				Object.assign(element, obj);
 			});
-			this.medicament = data;
+			//this.medicament = data;
 			this.medicament.sort((a, b) => (a.denomination > b.denomination) ? 1 : ((b.denomination > a.denomination) ? -1 : 0));
 		}
   }
