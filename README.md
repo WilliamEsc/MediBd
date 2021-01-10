@@ -1,8 +1,8 @@
 # mediBD Sujet RC1
 
-11810159 MATHIEU ALLARD-FRANCILLON
-11811574 ALI MESSELMANI
-11702268 WILLIAM ESCRIVA
+11810159 MATHIEU ALLARD-FRANCILLON<br/>
+11811574 ALI MESSELMANI<br/>
+11702268 WILLIAM ESCRIVA<br/>
 
 # Objectif
 
@@ -10,11 +10,11 @@ Nous avions pour Objectif de créer un explorable interactif avec des données t
 
 Nous avons choisis pour données celle fournis par la base de données publique des médicaments (http://base-donnees-publique.medicaments.gouv.fr/).
 
-Afin de réaliser notre site nous utilisons le MEAN STACK
-    -MONGODB, pour la base de donnée (back-end)
-    -EXPRESS.JS, framework de NODE.JS
-    -ANGULAR, framework de Javascript (front-end)
-    -NODE.JS, Pour le serveur (middleware)
+Afin de réaliser notre site nous utilisons le MEAN STACK<br/>
+    -MONGODB, pour la base de donnée (back-end)<br/>
+    -EXPRESS.JS, framework de NODE.JS<br/>
+    -ANGULAR, framework de Javascript (front-end)<br/>
+    -NODE.JS, Pour le serveur (middleware)<br/>
 
 
 ## Installation
