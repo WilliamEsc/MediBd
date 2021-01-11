@@ -4,7 +4,7 @@ const objectId = mongoose.ObjectId;
 
 mongoose.set('debug', true);
 
-schema.Types.String.set('trim', true);
+//schema.Types.String.set('trim', true);
 
 const proportionPrincepSchema = schema({
     _id:schema.Types.Mixed,

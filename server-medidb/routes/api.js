@@ -89,6 +89,7 @@ router.get('/getTitulaire', function (req, res, next) {
             res.status(404).send('no data found');
             return;
         }
+        data.sort((a, b) => (a.titulaire > b.titulaire) ? 1 : ((b.titulaire > a.titulaire) ? -1 : 0));
         res.send({ value: data });
     });
 });
@@ -191,27 +192,52 @@ router.post('/getPropPrincLab', function (req, res, next) {
             res.status(404).send('no data found');
             return;
         }
-        
         res.send({ value: data });
     });
 });
 
 router.post('/getMedi', function (req, res, next) {
-/*     const pageOptions = {
-        page: parseInt(req.body.page, 10) || 0,
-        limit: parseInt(req.body.limit, 10) || 100
-    } */
-    Object.entries(req.body).forEach(([key, value]) => {
+/*     Object.entries(req.body).forEach(([key, value]) => {
         console.log(key + ' : ' + value);
-    });
+    }); */
     let recherche = {};
     if (req.body.research) {
         recherche = { ...recherche, denomination: { "$regex": req.body.research, "$options": 'i' } };
     }
     if (req.body.titulaire) {
-        recherche = { ...recherche, titulaire: ' ' + req.body.titulaire };
+        let tabTitu=[];
+        req.body.titulaire.split(",").map(element=>{
+            tabTitu.push(" "+element.trim());
+        })
+        recherche = { ...recherche, titulaire: { "$in": tabTitu} };
     }
-    console.log(recherche);
+    if (req.body.voies) {
+        let tabVoie=req.body.voies;
+        let strVoie="";
+        req.body.voies.map(element=>{
+            strVoie+=";"+element;
+        })
+        tabVoie.push(strVoie.slice(1));
+        recherche = { ...recherche, voiesAdministration: { "$in": tabVoie} };
+    }
+    if (req.body.formes) {
+        recherche = { ...recherche, formePharmaceutique: { "$in": req.body.formes} };
+    }
+    if (req.body.autorisation) {
+        recherche = { ...recherche, statutAdministratif: { "$in": req.body.autorisation} };
+    }
+    if (req.body.commercialise) {
+        recherche = { ...recherche, etatDeCommercialisation: { "$in": req.body.commercialise} };
+    }
+    if (req.body.surveillance) {
+        recherche = { ...recherche, surveillanceRenforcee: { "$in": req.body.surveillance} };
+    }
+    if(req.body.statut){
+        recherche = { ...recherche, statutBdm: { "$in": req.body.statut} };
+    }
+    if(req.body.autorisation_euro){
+        recherche = { ...recherche, numeroAutorisationEuropeenne: req.body.autorisation_euro};
+    }
     specialite.find(recherche, function (err, data) {
         if (err) throw err;
         if (data.length === 0) {
@@ -219,7 +245,7 @@ router.post('/getMedi', function (req, res, next) {
             return;
         }
         res.send({ value: data });
-    });//.limit(pageOptions.limit).skip(pageOptions.limit * pageOptions.page);
+    });
 });
 
 router.get('/getAllMedi', function (req, res, next) {

@@ -104,12 +104,14 @@
 				<div class="form-group">
 					<label for="autorisation">Statut administratif de l’autorisation de mise sur le marché (AMM) :</label>
 					<div class="form-check form-check-inline" id="autorisation">
-						<label class="form-check-label" for="active&abroge">Les 2</label>
-						<input class="form-check-input" type="radio" name="autorisation" id="active&abroge" value="active&abroge" checked/>
+						<label class="form-check-label" for="active&abroge">Les 3</label>
+						<input class="form-check-input" type="radio" name="autorisation" id="active&abroge" value="" checked/>
 						<label class="form-check-label" for="active">Active</label>
-						<input class="form-check-input" type="radio" name="autorisation" id="active" value="active" />
+						<input class="form-check-input" type="radio" name="autorisation" id="active" value="Autorisation active" />
 						<label class="form-check-label" for="abroge">Abrogée</label>
-						<input class="form-check-input" type="radio" name="autorisation" id="abroge" value="abroge" />
+						<input class="form-check-input" type="radio" name="autorisation" id="abroge" value="Autorisation abrogée" />
+						<label class="form-check-label" for="suspendue">Suspendue</label>
+						<input class="form-check-input" type="radio" name="autorisation" id="suspendue" value="Autorisation suspendue" />
 					</div>
 				</div>
 			</div>
@@ -119,11 +121,11 @@
 					<label for="commercialise">État de commercialisation :</label>
 					<div class="form-check form-check-inline" id="commercialise">
 						<label class="form-check-label" for="oui&non">Les 2</label>
-						<input class="form-check-input" type="radio" name="commercialise" id="oui&non" value="oui&non" checked/>
+						<input class="form-check-input" type="radio" name="commercialise" id="oui&non" value="" checked/>
 						<label class="form-check-label" for="oui">Oui</label>
-						<input class="form-check-input" type="radio" name="commercialise" id="oui" value="oui" />
+						<input class="form-check-input" type="radio" name="commercialise" id="oui" value="Commercialisée" />
 						<label class="form-check-label" for="non">Non</label>
-						<input class="form-check-input" type="radio" name="commercialise" id="non" value="non" />
+						<input class="form-check-input" type="radio" name="commercialise" id="non" value="Non commercialisée" />
 					</div>
 				</div>
 			</div>
@@ -133,11 +135,11 @@
 					<label for="surveillance">Surveillance renforcée :</label>
 					<div class="form-check form-check-inline" id="surveillance">
 						<label class="form-check-label" for="ouiNonSurveillance">Les 2</label>
-						<input class="form-check-input" type="radio" name="surveillance" id="ouiNonSurveillance" value="oui&non" checked/>
+						<input class="form-check-input" type="radio" name="surveillance" id="ouiNonSurveillance" value="" checked/>
 						<label class="form-check-label" for="ouiSurveillance">Oui</label>
-						<input class="form-check-input" type="radio" name="surveillance" id="ouiSurveillance" value="oui" />
+						<input class="form-check-input" type="radio" name="surveillance" id="ouiSurveillance" value="Oui" />
 						<label class="form-check-label" for="nonSurveillance">Non</label>
-						<input class="form-check-input" type="radio" name="surveillance" id="nonSurveillance" value="non" />
+						<input class="form-check-input" type="radio" name="surveillance" id="nonSurveillance" value="Non" />
 					</div>
 				</div>
 			</div>
@@ -148,8 +150,8 @@
 				<label for="statut">Statut BDM :</label>
 				<select class="form-control align-bottom" id="statut">
 					<option value="">---</option>
-					<option value="alerte">Alerte</option>
-					<option value="warning">Warning disponibilité</option>
+					<option value="Alerte">Alerte</option>
+					<option value="Warning disponibilité">Warning disponibilité</option>
 				</select>
 			</div>
 			<!-- Numéro de l’autorisation européenne : -->
