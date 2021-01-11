@@ -1,7 +1,7 @@
 <div id="conteneurSelecteurTheme" title="Appliquer un thème clair/par défaut/sombre">
 	<ngbd-theme-switch class=""></ngbd-theme-switch>
 </div>
-<ul ngbNav #nav="ngbNav" class="nav-tabs" animation="true" keyboard="true">
+<ul ngbNav #nav="ngbNav" class="nav-tabs" animation="true" [keyboard]="true" [destroyOnHide]="false">
 	<li ngbNavItem>
 		<a ngbNavLink>Recherche</a>
 		<ng-template ngbNavContent>

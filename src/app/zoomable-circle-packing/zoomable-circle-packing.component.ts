@@ -11,15 +11,12 @@ export class ZoomableCirclePackingComponent implements OnInit, OnChanges{
 	constructor(){}
 	ngOnInit(): void {}
 
+	main;
 
 	ngOnChanges() {
 		this.initialisation();
 	}
-
-
-
-	main;
-
+	
 	toto = setTimeout(() => this.initialisation(), 500);
 
 	initialisation(){

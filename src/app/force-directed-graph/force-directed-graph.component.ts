@@ -13,7 +13,13 @@ export class ForceDirectedGraphComponent implements OnInit {
 
 	main;
 
-	toto = setTimeout(() => {
+	ngOnChanges() {
+		this.initialisation();
+	}
+
+	toto = setTimeout(() => this.initialisation(), 500);
+
+	initialisation(){
 		this.main = new Runtime().module(define, name=> {
 			if(name === "chart"){
 				return new Inspector(document.getElementById('directedGraph'));
@@ -25,10 +31,10 @@ export class ForceDirectedGraphComponent implements OnInit {
 			// it will update in the element previously given to the Inspector above
 			this.main.redefine("data", this.data)
 		  }, 500)
-	}, 500);
+	}
 }
 
-// https://observablehq.com/@sbryfcz/d3-force-directed-graph-with-convex-hull
+// Cf. https://observablehq.com/@sbryfcz/d3-force-directed-graph-with-convex-hull
 export default function define(runtime, observer){
 	const main = runtime.module();
 	main.variable(observer()).define(

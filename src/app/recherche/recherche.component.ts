@@ -11,378 +11,61 @@ import { DonneesService }					from '../donnees.service';
 })
 
 export class RechercheComponent implements OnInit {
-
-	dataFDG =  {
-		"nodes": [
-		  {"id": "Myriel", "group": 1},
-		  {"id": "Napoleon", "group": 1},
-		  {"id": "Mlle.Baptistine", "group": 1},
-		  {"id": "Mme.Magloire", "group": 1},
-		  {"id": "CountessdeLo", "group": 1},
-		  {"id": "Geborand", "group": 1},
-		  {"id": "Champtercier", "group": 1},
-		  {"id": "Cravatte", "group": 1},
-		  {"id": "Count", "group": 1},
-		  {"id": "OldMan", "group": 1},
-		  {"id": "Labarre", "group": 2},
-		  {"id": "Valjean", "group": 2},
-		  {"id": "Marguerite", "group": 3},
-		  {"id": "Mme.deR", "group": 2},
-		  {"id": "Isabeau", "group": 2},
-		  {"id": "Gervais", "group": 2},
-		  {"id": "Tholomyes", "group": 3},
-		  {"id": "Listolier", "group": 3},
-		  {"id": "Fameuil", "group": 3},
-		  {"id": "Blacheville", "group": 3},
-		  {"id": "Favourite", "group": 3},
-		  {"id": "Dahlia", "group": 3},
-		  {"id": "Zephine", "group": 3},
-		  {"id": "Fantine", "group": 3},
-		  {"id": "Mme.Thenardier", "group": 4},
-		  {"id": "Thenardier", "group": 4},
-		  {"id": "Cosette", "group": 5},
-		  {"id": "Javert", "group": 4},
-		  {"id": "Fauchelevent", "group": 0},
-		  {"id": "Bamatabois", "group": 2},
-		  {"id": "Perpetue", "group": 3},
-		  {"id": "Simplice", "group": 2},
-		  {"id": "Scaufflaire", "group": 2},
-		  {"id": "Woman1", "group": 2},
-		  {"id": "Judge", "group": 2},
-		  {"id": "Champmathieu", "group": 2},
-		  {"id": "Brevet", "group": 2},
-		  {"id": "Chenildieu", "group": 2},
-		  {"id": "Cochepaille", "group": 2},
-		  {"id": "Pontmercy", "group": 4},
-		  {"id": "Boulatruelle", "group": 6},
-		  {"id": "Eponine", "group": 4},
-		  {"id": "Anzelma", "group": 4},
-		  {"id": "Woman2", "group": 5},
-		  {"id": "MotherInnocent", "group": 0},
-		  {"id": "Gribier", "group": 0},
-		  {"id": "Jondrette", "group": 7},
-		  {"id": "Mme.Burgon", "group": 7},
-		  {"id": "Gavroche", "group": 8},
-		  {"id": "Gillenormand", "group": 5},
-		  {"id": "Magnon", "group": 5},
-		  {"id": "Mlle.Gillenormand", "group": 5},
-		  {"id": "Mme.Pontmercy", "group": 5},
-		  {"id": "Mlle.Vaubois", "group": 5},
-		  {"id": "Lt.Gillenormand", "group": 5},
-		  {"id": "Marius", "group": 8},
-		  {"id": "BaronessT", "group": 5},
-		  {"id": "Mabeuf", "group": 8},
-		  {"id": "Enjolras", "group": 8},
-		  {"id": "Combeferre", "group": 8},
-		  {"id": "Prouvaire", "group": 8},
-		  {"id": "Feuilly", "group": 8},
-		  {"id": "Courfeyrac", "group": 8},
-		  {"id": "Bahorel", "group": 8},
-		  {"id": "Bossuet", "group": 8},
-		  {"id": "Joly", "group": 8},
-		  {"id": "Grantaire", "group": 8},
-		  {"id": "MotherPlutarch", "group": 9},
-		  {"id": "Gueulemer", "group": 4},
-		  {"id": "Babet", "group": 4},
-		  {"id": "Claquesous", "group": 4},
-		  {"id": "Montparnasse", "group": 4},
-		  {"id": "Toussaint", "group": 5},
-		  {"id": "Child1", "group": 10},
-		  {"id": "Child2", "group": 10},
-		  {"id": "Brujon", "group": 4},
-		  {"id": "Mme.Hucheloup", "group": 8}
-		],
-		"links": [
-		  {"source": "Napoleon", "target": "Myriel", "value": 1},
-		  {"source": "Mlle.Baptistine", "target": "Myriel", "value": 8},
-		  {"source": "Mme.Magloire", "target": "Myriel", "value": 10},
-		  {"source": "Mme.Magloire", "target": "Mlle.Baptistine", "value": 6},
-		  {"source": "CountessdeLo", "target": "Myriel", "value": 1},
-		  {"source": "Geborand", "target": "Myriel", "value": 1},
-		  {"source": "Champtercier", "target": "Myriel", "value": 1},
-		  {"source": "Cravatte", "target": "Myriel", "value": 1},
-		  {"source": "Count", "target": "Myriel", "value": 2},
-		  {"source": "OldMan", "target": "Myriel", "value": 1},
-		  {"source": "Valjean", "target": "Labarre", "value": 1},
-		  {"source": "Valjean", "target": "Mme.Magloire", "value": 3},
-		  {"source": "Valjean", "target": "Mlle.Baptistine", "value": 3},
-		  {"source": "Valjean", "target": "Myriel", "value": 5},
-		  {"source": "Marguerite", "target": "Valjean", "value": 1},
-		  {"source": "Mme.deR", "target": "Valjean", "value": 1},
-		  {"source": "Isabeau", "target": "Valjean", "value": 1},
-		  {"source": "Gervais", "target": "Valjean", "value": 1},
-		  {"source": "Listolier", "target": "Tholomyes", "value": 4},
-		  {"source": "Fameuil", "target": "Tholomyes", "value": 4},
-		  {"source": "Fameuil", "target": "Listolier", "value": 4},
-		  {"source": "Blacheville", "target": "Tholomyes", "value": 4},
-		  {"source": "Blacheville", "target": "Listolier", "value": 4},
-		  {"source": "Blacheville", "target": "Fameuil", "value": 4},
-		  {"source": "Favourite", "target": "Tholomyes", "value": 3},
-		  {"source": "Favourite", "target": "Listolier", "value": 3},
-		  {"source": "Favourite", "target": "Fameuil", "value": 3},
-		  {"source": "Favourite", "target": "Blacheville", "value": 4},
-		  {"source": "Dahlia", "target": "Tholomyes", "value": 3},
-		  {"source": "Dahlia", "target": "Listolier", "value": 3},
-		  {"source": "Dahlia", "target": "Fameuil", "value": 3},
-		  {"source": "Dahlia", "target": "Blacheville", "value": 3},
-		  {"source": "Dahlia", "target": "Favourite", "value": 5},
-		  {"source": "Zephine", "target": "Tholomyes", "value": 3},
-		  {"source": "Zephine", "target": "Listolier", "value": 3},
-		  {"source": "Zephine", "target": "Fameuil", "value": 3},
-		  {"source": "Zephine", "target": "Blacheville", "value": 3},
-		  {"source": "Zephine", "target": "Favourite", "value": 4},
-		  {"source": "Zephine", "target": "Dahlia", "value": 4},
-		  {"source": "Fantine", "target": "Tholomyes", "value": 3},
-		  {"source": "Fantine", "target": "Listolier", "value": 3},
-		  {"source": "Fantine", "target": "Fameuil", "value": 3},
-		  {"source": "Fantine", "target": "Blacheville", "value": 3},
-		  {"source": "Fantine", "target": "Favourite", "value": 4},
-		  {"source": "Fantine", "target": "Dahlia", "value": 4},
-		  {"source": "Fantine", "target": "Zephine", "value": 4},
-		  {"source": "Fantine", "target": "Marguerite", "value": 2},
-		  {"source": "Fantine", "target": "Valjean", "value": 9},
-		  {"source": "Mme.Thenardier", "target": "Fantine", "value": 2},
-		  {"source": "Mme.Thenardier", "target": "Valjean", "value": 7},
-		  {"source": "Thenardier", "target": "Mme.Thenardier", "value": 13},
-		  {"source": "Thenardier", "target": "Fantine", "value": 1},
-		  {"source": "Thenardier", "target": "Valjean", "value": 12},
-		  {"source": "Cosette", "target": "Mme.Thenardier", "value": 4},
-		  {"source": "Cosette", "target": "Valjean", "value": 31},
-		  {"source": "Cosette", "target": "Tholomyes", "value": 1},
-		  {"source": "Cosette", "target": "Thenardier", "value": 1},
-		  {"source": "Javert", "target": "Valjean", "value": 17},
-		  {"source": "Javert", "target": "Fantine", "value": 5},
-		  {"source": "Javert", "target": "Thenardier", "value": 5},
-		  {"source": "Javert", "target": "Mme.Thenardier", "value": 1},
-		  {"source": "Javert", "target": "Cosette", "value": 1},
-		  {"source": "Fauchelevent", "target": "Valjean", "value": 8},
-		  {"source": "Fauchelevent", "target": "Javert", "value": 1},
-		  {"source": "Bamatabois", "target": "Fantine", "value": 1},
-		  {"source": "Bamatabois", "target": "Javert", "value": 1},
-		  {"source": "Bamatabois", "target": "Valjean", "value": 2},
-		  {"source": "Perpetue", "target": "Fantine", "value": 1},
-		  {"source": "Simplice", "target": "Perpetue", "value": 2},
-		  {"source": "Simplice", "target": "Valjean", "value": 3},
-		  {"source": "Simplice", "target": "Fantine", "value": 2},
-		  {"source": "Simplice", "target": "Javert", "value": 1},
-		  {"source": "Scaufflaire", "target": "Valjean", "value": 1},
-		  {"source": "Woman1", "target": "Valjean", "value": 2},
-		  {"source": "Woman1", "target": "Javert", "value": 1},
-		  {"source": "Judge", "target": "Valjean", "value": 3},
-		  {"source": "Judge", "target": "Bamatabois", "value": 2},
-		  {"source": "Champmathieu", "target": "Valjean", "value": 3},
-		  {"source": "Champmathieu", "target": "Judge", "value": 3},
-		  {"source": "Champmathieu", "target": "Bamatabois", "value": 2},
-		  {"source": "Brevet", "target": "Judge", "value": 2},
-		  {"source": "Brevet", "target": "Champmathieu", "value": 2},
-		  {"source": "Brevet", "target": "Valjean", "value": 2},
-		  {"source": "Brevet", "target": "Bamatabois", "value": 1},
-		  {"source": "Chenildieu", "target": "Judge", "value": 2},
-		  {"source": "Chenildieu", "target": "Champmathieu", "value": 2},
-		  {"source": "Chenildieu", "target": "Brevet", "value": 2},
-		  {"source": "Chenildieu", "target": "Valjean", "value": 2},
-		  {"source": "Chenildieu", "target": "Bamatabois", "value": 1},
-		  {"source": "Cochepaille", "target": "Judge", "value": 2},
-		  {"source": "Cochepaille", "target": "Champmathieu", "value": 2},
-		  {"source": "Cochepaille", "target": "Brevet", "value": 2},
-		  {"source": "Cochepaille", "target": "Chenildieu", "value": 2},
-		  {"source": "Cochepaille", "target": "Valjean", "value": 2},
-		  {"source": "Cochepaille", "target": "Bamatabois", "value": 1},
-		  {"source": "Pontmercy", "target": "Thenardier", "value": 1},
-		  {"source": "Boulatruelle", "target": "Thenardier", "value": 1},
-		  {"source": "Eponine", "target": "Mme.Thenardier", "value": 2},
-		  {"source": "Eponine", "target": "Thenardier", "value": 3},
-		  {"source": "Anzelma", "target": "Eponine", "value": 2},
-		  {"source": "Anzelma", "target": "Thenardier", "value": 2},
-		  {"source": "Anzelma", "target": "Mme.Thenardier", "value": 1},
-		  {"source": "Woman2", "target": "Valjean", "value": 3},
-		  {"source": "Woman2", "target": "Cosette", "value": 1},
-		  {"source": "Woman2", "target": "Javert", "value": 1},
-		  {"source": "MotherInnocent", "target": "Fauchelevent", "value": 3},
-		  {"source": "MotherInnocent", "target": "Valjean", "value": 1},
-		  {"source": "Gribier", "target": "Fauchelevent", "value": 2},
-		  {"source": "Mme.Burgon", "target": "Jondrette", "value": 1},
-		  {"source": "Gavroche", "target": "Mme.Burgon", "value": 2},
-		  {"source": "Gavroche", "target": "Thenardier", "value": 1},
-		  {"source": "Gavroche", "target": "Javert", "value": 1},
-		  {"source": "Gavroche", "target": "Valjean", "value": 1},
-		  {"source": "Gillenormand", "target": "Cosette", "value": 3},
-		  {"source": "Gillenormand", "target": "Valjean", "value": 2},
-		  {"source": "Magnon", "target": "Gillenormand", "value": 1},
-		  {"source": "Magnon", "target": "Mme.Thenardier", "value": 1},
-		  {"source": "Mlle.Gillenormand", "target": "Gillenormand", "value": 9},
-		  {"source": "Mlle.Gillenormand", "target": "Cosette", "value": 2},
-		  {"source": "Mlle.Gillenormand", "target": "Valjean", "value": 2},
-		  {"source": "Mme.Pontmercy", "target": "Mlle.Gillenormand", "value": 1},
-		  {"source": "Mme.Pontmercy", "target": "Pontmercy", "value": 1},
-		  {"source": "Mlle.Vaubois", "target": "Mlle.Gillenormand", "value": 1},
-		  {"source": "Lt.Gillenormand", "target": "Mlle.Gillenormand", "value": 2},
-		  {"source": "Lt.Gillenormand", "target": "Gillenormand", "value": 1},
-		  {"source": "Lt.Gillenormand", "target": "Cosette", "value": 1},
-		  {"source": "Marius", "target": "Mlle.Gillenormand", "value": 6},
-		  {"source": "Marius", "target": "Gillenormand", "value": 12},
-		  {"source": "Marius", "target": "Pontmercy", "value": 1},
-		  {"source": "Marius", "target": "Lt.Gillenormand", "value": 1},
-		  {"source": "Marius", "target": "Cosette", "value": 21},
-		  {"source": "Marius", "target": "Valjean", "value": 19},
-		  {"source": "Marius", "target": "Tholomyes", "value": 1},
-		  {"source": "Marius", "target": "Thenardier", "value": 2},
-		  {"source": "Marius", "target": "Eponine", "value": 5},
-		  {"source": "Marius", "target": "Gavroche", "value": 4},
-		  {"source": "BaronessT", "target": "Gillenormand", "value": 1},
-		  {"source": "BaronessT", "target": "Marius", "value": 1},
-		  {"source": "Mabeuf", "target": "Marius", "value": 1},
-		  {"source": "Mabeuf", "target": "Eponine", "value": 1},
-		  {"source": "Mabeuf", "target": "Gavroche", "value": 1},
-		  {"source": "Enjolras", "target": "Marius", "value": 7},
-		  {"source": "Enjolras", "target": "Gavroche", "value": 7},
-		  {"source": "Enjolras", "target": "Javert", "value": 6},
-		  {"source": "Enjolras", "target": "Mabeuf", "value": 1},
-		  {"source": "Enjolras", "target": "Valjean", "value": 4},
-		  {"source": "Combeferre", "target": "Enjolras", "value": 15},
-		  {"source": "Combeferre", "target": "Marius", "value": 5},
-		  {"source": "Combeferre", "target": "Gavroche", "value": 6},
-		  {"source": "Combeferre", "target": "Mabeuf", "value": 2},
-		  {"source": "Prouvaire", "target": "Gavroche", "value": 1},
-		  {"source": "Prouvaire", "target": "Enjolras", "value": 4},
-		  {"source": "Prouvaire", "target": "Combeferre", "value": 2},
-		  {"source": "Feuilly", "target": "Gavroche", "value": 2},
-		  {"source": "Feuilly", "target": "Enjolras", "value": 6},
-		  {"source": "Feuilly", "target": "Prouvaire", "value": 2},
-		  {"source": "Feuilly", "target": "Combeferre", "value": 5},
-		  {"source": "Feuilly", "target": "Mabeuf", "value": 1},
-		  {"source": "Feuilly", "target": "Marius", "value": 1},
-		  {"source": "Courfeyrac", "target": "Marius", "value": 9},
-		  {"source": "Courfeyrac", "target": "Enjolras", "value": 17},
-		  {"source": "Courfeyrac", "target": "Combeferre", "value": 13},
-		  {"source": "Courfeyrac", "target": "Gavroche", "value": 7},
-		  {"source": "Courfeyrac", "target": "Mabeuf", "value": 2},
-		  {"source": "Courfeyrac", "target": "Eponine", "value": 1},
-		  {"source": "Courfeyrac", "target": "Feuilly", "value": 6},
-		  {"source": "Courfeyrac", "target": "Prouvaire", "value": 3},
-		  {"source": "Bahorel", "target": "Combeferre", "value": 5},
-		  {"source": "Bahorel", "target": "Gavroche", "value": 5},
-		  {"source": "Bahorel", "target": "Courfeyrac", "value": 6},
-		  {"source": "Bahorel", "target": "Mabeuf", "value": 2},
-		  {"source": "Bahorel", "target": "Enjolras", "value": 4},
-		  {"source": "Bahorel", "target": "Feuilly", "value": 3},
-		  {"source": "Bahorel", "target": "Prouvaire", "value": 2},
-		  {"source": "Bahorel", "target": "Marius", "value": 1},
-		  {"source": "Bossuet", "target": "Marius", "value": 5},
-		  {"source": "Bossuet", "target": "Courfeyrac", "value": 12},
-		  {"source": "Bossuet", "target": "Gavroche", "value": 5},
-		  {"source": "Bossuet", "target": "Bahorel", "value": 4},
-		  {"source": "Bossuet", "target": "Enjolras", "value": 10},
-		  {"source": "Bossuet", "target": "Feuilly", "value": 6},
-		  {"source": "Bossuet", "target": "Prouvaire", "value": 2},
-		  {"source": "Bossuet", "target": "Combeferre", "value": 9},
-		  {"source": "Bossuet", "target": "Mabeuf", "value": 1},
-		  {"source": "Bossuet", "target": "Valjean", "value": 1},
-		  {"source": "Joly", "target": "Bahorel", "value": 5},
-		  {"source": "Joly", "target": "Bossuet", "value": 7},
-		  {"source": "Joly", "target": "Gavroche", "value": 3},
-		  {"source": "Joly", "target": "Courfeyrac", "value": 5},
-		  {"source": "Joly", "target": "Enjolras", "value": 5},
-		  {"source": "Joly", "target": "Feuilly", "value": 5},
-		  {"source": "Joly", "target": "Prouvaire", "value": 2},
-		  {"source": "Joly", "target": "Combeferre", "value": 5},
-		  {"source": "Joly", "target": "Mabeuf", "value": 1},
-		  {"source": "Joly", "target": "Marius", "value": 2},
-		  {"source": "Grantaire", "target": "Bossuet", "value": 3},
-		  {"source": "Grantaire", "target": "Enjolras", "value": 3},
-		  {"source": "Grantaire", "target": "Combeferre", "value": 1},
-		  {"source": "Grantaire", "target": "Courfeyrac", "value": 2},
-		  {"source": "Grantaire", "target": "Joly", "value": 2},
-		  {"source": "Grantaire", "target": "Gavroche", "value": 1},
-		  {"source": "Grantaire", "target": "Bahorel", "value": 1},
-		  {"source": "Grantaire", "target": "Feuilly", "value": 1},
-		  {"source": "Grantaire", "target": "Prouvaire", "value": 1},
-		  {"source": "MotherPlutarch", "target": "Mabeuf", "value": 3},
-		  {"source": "Gueulemer", "target": "Thenardier", "value": 5},
-		  {"source": "Gueulemer", "target": "Valjean", "value": 1},
-		  {"source": "Gueulemer", "target": "Mme.Thenardier", "value": 1},
-		  {"source": "Gueulemer", "target": "Javert", "value": 1},
-		  {"source": "Gueulemer", "target": "Gavroche", "value": 1},
-		  {"source": "Gueulemer", "target": "Eponine", "value": 1},
-		  {"source": "Babet", "target": "Thenardier", "value": 6},
-		  {"source": "Babet", "target": "Gueulemer", "value": 6},
-		  {"source": "Babet", "target": "Valjean", "value": 1},
-		  {"source": "Babet", "target": "Mme.Thenardier", "value": 1},
-		  {"source": "Babet", "target": "Javert", "value": 2},
-		  {"source": "Babet", "target": "Gavroche", "value": 1},
-		  {"source": "Babet", "target": "Eponine", "value": 1},
-		  {"source": "Claquesous", "target": "Thenardier", "value": 4},
-		  {"source": "Claquesous", "target": "Babet", "value": 4},
-		  {"source": "Claquesous", "target": "Gueulemer", "value": 4},
-		  {"source": "Claquesous", "target": "Valjean", "value": 1},
-		  {"source": "Claquesous", "target": "Mme.Thenardier", "value": 1},
-		  {"source": "Claquesous", "target": "Javert", "value": 1},
-		  {"source": "Claquesous", "target": "Eponine", "value": 1},
-		  {"source": "Claquesous", "target": "Enjolras", "value": 1},
-		  {"source": "Montparnasse", "target": "Javert", "value": 1},
-		  {"source": "Montparnasse", "target": "Babet", "value": 2},
-		  {"source": "Montparnasse", "target": "Gueulemer", "value": 2},
-		  {"source": "Montparnasse", "target": "Claquesous", "value": 2},
-		  {"source": "Montparnasse", "target": "Valjean", "value": 1},
-		  {"source": "Montparnasse", "target": "Gavroche", "value": 1},
-		  {"source": "Montparnasse", "target": "Eponine", "value": 1},
-		  {"source": "Montparnasse", "target": "Thenardier", "value": 1},
-		  {"source": "Toussaint", "target": "Cosette", "value": 2},
-		  {"source": "Toussaint", "target": "Javert", "value": 1},
-		  {"source": "Toussaint", "target": "Valjean", "value": 1},
-		  {"source": "Child1", "target": "Gavroche", "value": 2},
-		  {"source": "Child2", "target": "Gavroche", "value": 2},
-		  {"source": "Child2", "target": "Child1", "value": 3},
-		  {"source": "Brujon", "target": "Babet", "value": 3},
-		  {"source": "Brujon", "target": "Gueulemer", "value": 3},
-		  {"source": "Brujon", "target": "Thenardier", "value": 3},
-		  {"source": "Brujon", "target": "Gavroche", "value": 1},
-		  {"source": "Brujon", "target": "Eponine", "value": 1},
-		  {"source": "Brujon", "target": "Claquesous", "value": 1},
-		  {"source": "Brujon", "target": "Montparnasse", "value": 1},
-		  {"source": "Mme.Hucheloup", "target": "Bossuet", "value": 1},
-		  {"source": "Mme.Hucheloup", "target": "Joly", "value": 1},
-		  {"source": "Mme.Hucheloup", "target": "Grantaire", "value": 1},
-		  {"source": "Mme.Hucheloup", "target": "Bahorel", "value": 1},
-		  {"source": "Mme.Hucheloup", "target": "Courfeyrac", "value": 1},
-		  {"source": "Mme.Hucheloup", "target": "Gavroche", "value": 1},
-		  {"source": "Mme.Hucheloup", "target": "Enjolras", "value": 1}
-		]
-	}
-	  
 	@ViewChild(RechercheAvanceeComponent) child;
 	constructor(private donnees: DonneesService){}
 	ngOnInit(){}
 
-	test				= '';
-	tabl				= Array();				// Contenus du resultat brut.
-	resultats			= false;				// Existence d'un résultat.
-	resultatsNonNul 	= false;				// Existence d'un résultat contenant au moins un élément.
-	resultatsMultiples	= false;				// Existence d'un résultat contenant au moins deux élément.
-	collectionSize		= 0;					// Nbr de résultats.
-	records				= Array();
-	pageSize			= 10;					// Nombre de ligne dans la présentation en tableau par page.
-	page				= 1;					// Page courante.
-	dataZCP				= Object();				// Résultat dans un format JSON adapté au graphique en cercles concentriques zoomables.
-	affichageMenusZCP	= Array(false, false);	// Contrôle l'affichage/masquage des <select> supplémentaires du ZCP.
-	menusZCP			= Array(
-								Array("denomination", "Dénomination"),
-								Array("codeCis", "Code CIS"),
-								Array("formePharmaceutique", "Forme pharmaceutique"),
-								Array("voiesAdministration", "Voies d'administration"),
-								Array("statutAdministratif", "Statut administratif de l'AMM"),
-								Array("typeProcedureAMM", "Type de procédure AMM"),
-								Array("etatDeCommercialisation", "État de commercialisation"),
-								Array("dateAMM", "Date AMM"),
-								Array("statutBdm", "Statut Bdm"),
-								Array("numeroAutorisationEuropeenne", "Numéro d'autorisation européenne"),
-								Array("titulaire", "Titulaire"),
-								Array("surveillanceRenforcee", "Surveillance renforcée")
-							);					// Valeur et Étiquette des <option> des <select> du ZCP.
+	test						= '';
+	tabl						= Array();				// Contenus du resultat brut.
+	resultats					= false;				// Existence d'un résultat.
+	resultatsNonNul 			= false;				// Existence d'un résultat contenant au moins un élément.
+	resultatsMultiples			= false;				// Existence d'un résultat contenant au moins deux élément.
+	collectionSize				= 0;					// Nbr de résultats.
+	records						= Array();
+	pageSize					= 10;					// Nombre de ligne dans la présentation en tableau par page.
+	page						= 1;					// Page courante.
+	dataZCP						= Object();				// Résultat dans un format JSON adapté au graphique en cercles concentriques zoomables.
+	dataFDG 					= {						// Résultats dans un format JSON adapté au graphique en force directrice.
+									nodes : Array(),
+									links : Array()
+								};
+	affichageMenusZCP			= Array(false, false);	// Contrôle l'affichage/masquage des <select> supplémentaires du ZCP.
+	collectionSizeInfAPageSize	= false;				// Indique si collectionSize est inférieur à pageSize.
+	trisCourantTableau			= String();				// Indique le tris appliqué sur le tableau.
+	rechercheEnCours			= false;
+	menusZCP					= Array(				// Valeur et Étiquette des <option> des <select> du ZCP.
+									Array("denomination", "Dénomination"),
+									Array("codeCis", "Code CIS"),
+									Array("formePharmaceutique", "Forme pharmaceutique"),
+									Array("voiesAdministration", "Voies d'administration"),
+									Array("statutAdministratif", "Statut administratif de l'AMM"),
+									Array("typeProcedureAMM", "Type de procédure AMM"),
+									Array("etatDeCommercialisation", "État de commercialisation"),
+									Array("dateAMM", "Date AMM"),
+									Array("statutBdm", "Statut Bdm"),
+									Array("numeroAutorisationEuropeenne", "Numéro d'autorisation européenne"),
+									Array("titulaire", "Titulaire"),
+									Array("surveillanceRenforcee", "Surveillance renforcée")
+								);
+	menus						= Array(				// Valeurs et étiquettes des <th> du tableau.
+									Array("denomination", "Dénomination"),
+									Array("codeCis", "Code CIS"),
+									Array("formePharmaceutique", "Forme pharmaceutique"),
+									Array("voiesAdministration", "Voies d'administration"),
+									Array("statutAdministratif", "Statut administratif de l"),
+									Array("typeProcedureAMM", "Type de procédure de l"),
+									Array("etatDeCommercialisation", "État de commercialisation"),
+									Array("dateAMM", "Date de l"),
+									Array("statutBdm", "Statut Bdm"),
+									Array("numeroAutorisationEuropeenne", "Numéro d'autorisation européenne"),
+									Array("titulaire", "Titulaire"),
+									Array("surveillanceRenforcee", "Surveillance renforcée")
+								);
 
-	isCollapsed			= false;
+	isCollapsed			= false;						// Utilisé pour indiquer l'affichage de la recherche avancée.
 
 	public appelRecherche(event): void {
+		this.rechercheEnCours = true;
 		let test = this.test;
 		const target = event.target;
 		let query = {}; //objet de la requête
@@ -446,14 +129,16 @@ export class RechercheComponent implements OnInit {
 		}
 
 		var toto  = Object();
-
+		
 		this.donnees.getData(query).subscribe(
 			data => {
-				toto = data;								// Récupération des données dans un Object pour 
-				console.log(data);
-				this.tabl = toto.output;					// accéder sans erreur de compilation à son membre .value
+				toto = data;								// Récupération des données dans un Object pour
+				this.rechercheEnCours = false;
+				this.tabl = toto.value;						// accéder sans erreur de compilation à son membre .value.
 				this.resultats = true;
 				this.collectionSize = this.tabl.length;
+				this.majCollectionSizeInfAPageSize();
+				this.trisTableau(this.trisCourantTableau);
 				if(this.tabl.length>0){
 					this.resultatsNonNul = true;
 					if(this.tabl.length>1){
@@ -461,12 +146,12 @@ export class RechercheComponent implements OnInit {
 					}
 				}
 				this.resultatToZCP();
-				console.log(this.tabl);
+				this.resultatToFDG();
 			}
 		);
 	}
 
-	resultatToZCP(appelSelecteur=0){ // Renvois les données dans un format JSON adapté au graphique en cercles concentriques zoomables.
+	resultatToZCP(appelSelecteur=0): void{ // Renvois les données dans un format JSON adapté au graphique en cercles concentriques zoomables.
 		let longeurMinNom		= 5;	// Longueur minimum des noms affichées.
 		let minGrandeFratrie	= 30;	// Valeur à partir de laquelle les noms d'une fratrie doivent être raccourcis pour la lisibilité. 
 		let maxCarNom			= 10;	// Maximum de caractères dans un nom de fils nullipare.
@@ -491,7 +176,7 @@ export class RechercheComponent implements OnInit {
 		};
 
 		if(criteres[0] != 0 && criteres.length>0){
-			// Interractions entre les deux <select> lors de la sélction d'un choix sur ceux-ci.
+			// Interractions entre les deux premiers <select> lors de la sélction d'un choix sur ceux-ci.
 			if(criteres[0] === criteres[1]){ // Mà0 du deuxième <select> si le choix du premier change pour l'identique du second.
 				this.affichageMenusZCP[0]=false;
 				criteres[1]=0;
@@ -515,6 +200,36 @@ export class RechercheComponent implements OnInit {
 				(<HTMLSelectElement>optionsSelect2[(<HTMLSelectElement>document.getElementById('critere1')).selectedIndex]).setAttribute('disabled', '');
 			}, 500);
 
+			// Interractions du troisième <select> avec les 2 premiers.
+			if(this.affichageMenusZCP[1] && (criteres[0] === criteres[2] || criteres[1] === criteres[2]) && criteres[1]!=0){ // Mà0 du troisième <select> si le choix d'un des 2 premiers change pour l'identique du second.
+				this.affichageMenusZCP[1]=false;
+				criteres[2]=0;
+				setTimeout(() => {
+					this.affichageMenusZCP[1]=true;
+				}, 125);
+			}else if(this.affichageMenusZCP[1] === true && appelSelecteur != 2 && criteres[1]!=0){ // Maintient du selected sur le deuxième <select> lors d'un changement de choix sur le premier.
+				let indexSelection3 = (<HTMLSelectElement>document.getElementById('critere3')).selectedIndex;
+				this.affichageMenusZCP[1]=false;
+				setTimeout(() => {
+					this.affichageMenusZCP[1]=true;
+					setTimeout(() => {
+						(<HTMLSelectElement>document.getElementById('critere3').childNodes[indexSelection3]).setAttribute('selected', '');
+					}, 125);
+				}, 125);
+			}else if(criteres[1] != 0 && criteres[1] != undefined){ // Affichage du troisième <select> lors de la sélection d'un choix sur le premier.
+				this.affichageMenusZCP[1]=true;
+			}
+			if(criteres[1]==0 || criteres[1]==undefined){ // Masquage du troisième <select> lors d'un choix non définis sur le pécédent.
+				this.affichageMenusZCP[1]=false;
+			}
+			setTimeout(() => { // Disabled sur le troisième <select> des choix sélectionnés sur les 2 premiers.
+				if(document.getElementById('critere3')!=null){ // Patch d'une erreur dans la console.
+					let optionsSelect2 = document.getElementById('critere3').childNodes;
+					(<HTMLSelectElement>optionsSelect2[(<HTMLSelectElement>document.getElementById('critere1')).selectedIndex]).setAttribute('disabled', '');
+					(<HTMLSelectElement>optionsSelect2[(<HTMLSelectElement>document.getElementById('critere2')).selectedIndex]).setAttribute('disabled', '');
+				}
+			}, 500);
+
 			// Traitement des données
 			do{
 				// Ajout des des petits-enfant de la racine
@@ -529,7 +244,10 @@ export class RechercheComponent implements OnInit {
 						if(data[i][criteres[1]]==undefined){
 							data[i][criteres[1]]='';
 						}
-						retourEnfant.children.push({"name" : data[i].denomination, "value" : data[i].codeCis, "critere1" : data[i][criteres[1]]});
+						if(data[i][criteres[2]]==undefined){
+							data[i][criteres[2]]='';
+						}
+						retourEnfant.children.push({"name" : data[i].denomination, "value" : data[i].codeCis, "critere1" : data[i][criteres[1]], "critere2" : data[i][criteres[2]]});
 						aSupprimer.push(i);
 					}else if(data[i][criteres[0]]==undefined){ // Mise en fratrie des élèment ne possédant pas le critère.
 						data[i][criteres[0]]="";
@@ -562,12 +280,13 @@ export class RechercheComponent implements OnInit {
 					do{
 						let retourPetitEnfant = {
 							"name" : this.formatNameCercle(retourEnfant.children[0]['critere1'], criteres[1]),
-							"children" : []
+							"children" : [],
+							"childrenTemp" : []
 						}
 						let aSupprimer2 = Array();
 						for(let i=0; i<retourEnfant.children.length; i++){
 							if(retourEnfant.children[i]['critere1']===retourEnfant.children[0]['critere1'] && retourEnfant.children[i]['critere1'] != undefined){ 
-								retourPetitEnfant.children.push({"name" : retourEnfant.children[i]['name'], "value" : retourEnfant.children[i]['value']});
+								retourPetitEnfant.children.push({"name" : retourEnfant.children[i]['name'], "value" : retourEnfant.children[i]['value'], "critere2" : retourEnfant.children[i]['critere2']});
 								aSupprimer2.push(i);
 							}else if(retourEnfant.children[i]['critere1']==undefined){ // Mise en fratrie des élèment ne possédant pas le critère.
 								retourEnfant.children[i]['critere1']="";
@@ -595,6 +314,53 @@ export class RechercheComponent implements OnInit {
 								retourPetitEnfant.children[i].name = retourPetitEnfant.children[i].name.slice(0, maxCarNom);
 							}
 						}
+
+						// Traitement de niveau 3
+						if(criteres[2]!=undefined && criteres[2]!= 0 && retourPetitEnfant.children[0]!=undefined && retourPetitEnfant.children[0]['critere2'] != undefined){
+							
+							do{
+								let retourArrierePetitEnfant = {
+									"name" : this.formatNameCercle(retourPetitEnfant.children[0]['critere2'], criteres[2]),
+									"children" : []
+								};
+								let aSupprimer3 = Array();
+								for(let i=0; i<retourPetitEnfant.children.length; i++){
+									if(retourPetitEnfant.children[i]['critere2'] != undefined && retourPetitEnfant.children[i]['critere2']===retourPetitEnfant.children[0]['critere2']){ 
+										retourArrierePetitEnfant.children.push({"name" : retourPetitEnfant.children[i]['name'], "value" : retourPetitEnfant.children[i]['value']});
+										aSupprimer3.push(i);
+									}else if(retourPetitEnfant.children[i]['critere2']==undefined){ // Mise en fratrie des élèment ne possédant pas le critère.
+										retourPetitEnfant.children[i]['critere2']="";
+									}
+								}
+								// Supression des données déjà ajoutées
+								let dataTemp3 = Array();
+								for(let i=0; i<retourPetitEnfant.children.length; i++){
+									if(!aSupprimer3.includes(i)){
+										dataTemp3.push(retourPetitEnfant.children[i]);
+									}
+								}
+								retourPetitEnfant.children = dataTemp3;
+								// Raccourcissement des noms trops long si la fratrie est trop grande pour la clarté de lecture.
+								if(retourArrierePetitEnfant.children.length>minGrandeFratrie && criteres[3]==undefined){
+									for(let i=0; i<retourArrierePetitEnfant.children.length; i++){
+										if(retourArrierePetitEnfant.children[i].name.search(' ')<longeurMinNom){ // Pas de raccourcissement de moins de 5 caractères.
+											retourArrierePetitEnfant.children[i].name = retourArrierePetitEnfant.children[i].name.slice(0, longeurMinNom);
+										}else{
+											retourArrierePetitEnfant.children[i].name = retourArrierePetitEnfant.children[i].name.slice(0, retourArrierePetitEnfant.children[i].name.search(' '));
+										}
+									}
+								}else if(criteres[3]==undefined){
+									for(let i=0; i<retourArrierePetitEnfant.children.length; i++){
+										retourArrierePetitEnfant.children[i].name = retourArrierePetitEnfant.children[i].name.slice(0, maxCarNom);
+									}
+								}
+								retourPetitEnfant.childrenTemp.push(retourArrierePetitEnfant);
+
+							}while(retourPetitEnfant.children.length>0);
+							for(let i=0; i<retourPetitEnfant.childrenTemp.length; i++){
+								retourPetitEnfant.children.push(retourPetitEnfant.childrenTemp[i]);
+							}
+						}
 						retourEnfant.childrenTemp.push(retourPetitEnfant);
 					}while(retourEnfant.children.length>0);
 					for(let i=0; i<retourEnfant.childrenTemp.length; i++){
@@ -604,8 +370,9 @@ export class RechercheComponent implements OnInit {
 				data = dataTemp;
 				retour.children.push(retourEnfant);
 			}while(data.length>0);
-		}else{
+		}else{ // Masquage des 2 derniers <select> si le premier n'est pas utilisé.
 			this.affichageMenusZCP[0]=false;
+			this.affichageMenusZCP[1]=false;
 		}
 
 		// Ajout des enfants nullipares à la racine
@@ -623,17 +390,10 @@ export class RechercheComponent implements OnInit {
 		this.dataZCP = retour;
 	}
 
-	formatNameCercle(nom, critere){ // Renvoie un nom de cercle lisible par un utilisateur à partir de la donnée brute.
+	formatNameCercle(nom: string, critere: string): string{ // Renvoie un nom de cercle lisible par un utilisateur à partir de la donnée brute.
 		nom = String(nom); // Pour éviter l'appel de la méthode .indexOf sur un Number.
 		let nomFormatte;
-		if(critere == 'dateAMM'){ // Formattage de la date si le critère en est une.
-			nomFormatte = new Date(nom.substr(0, 10));
-			if(nomFormatte == 'Invalid Date'){
-				nomFormatte = 'Date non renseignée';
-			}else{
-				nomFormatte = nomFormatte.toLocaleDateString('fr-FR', {year: 'numeric', month: 'long', day: 'numeric' });
-			}
-		}else if(nom.indexOf(';') != -1){ // Présentation française des listes.
+		if(nom.indexOf(';') != -1){ // Présentation française des listes.
 			nomFormatte = nom.split(';').join(', ');
 			nomFormatte = nomFormatte.replace(/[,]([^,]+$)/, ' et $1');
 
@@ -641,5 +401,106 @@ export class RechercheComponent implements OnInit {
 			nomFormatte = nom;
 		}
 		return nomFormatte;
+	}
+
+	majPageSize(): void{ // Met à jour le nombre de ligne de tableau.
+		this.pageSize = (<number>(<unknown>(<HTMLInputElement>document.getElementById('inlineFormCustomSelectPref')).value));
+		this.majCollectionSizeInfAPageSize();
+	}
+
+	majCollectionSizeInfAPageSize(): void{ // Met à jour collectionSizeInfAPageSize.
+		if(this.collectionSize < this.pageSize){
+			this.collectionSizeInfAPageSize = true;
+		}else{
+			this.collectionSizeInfAPageSize = false;
+		}
+	}
+
+	trisTableau(index: string): void{ // Tris le tableau de résultats selon l'index passé en paramètre.
+		if(index!=''){
+			if(index==this.trisCourantTableau){
+				this.tabl.reverse();
+			}else{
+				this.trisCourantTableau = index;
+				this.tabl.sort(
+					function(a, b){
+						if(index=='dateAMM'){
+							let dateStr = a[index].split('/');
+							let dateStr2 = b[index].split('/');
+							return Date.parse(dateStr[2] + '-' + dateStr[1] + '-' + dateStr[0]) - Date.parse(dateStr2[2] + '-' + dateStr2[1] + '-' + dateStr2[0]);
+						}else if(typeof a[index] === 'number'){
+							return a[index] - b[index];
+						}else{
+							return a[index].localeCompare(b[index]);
+						}
+						
+					}
+				)
+			}
+		}
+	}
+
+	resultatToFDG(): void{ // Renvois les données dans un format JSON adapté au graphique en force dirigé.
+		this.dataFDG = {
+			nodes : Array(),
+			links : Array()
+		};
+		let familles = [[]];
+		let formes = Array();
+		let voies = Array();
+		let numeroFamille = 0;
+
+		// Établissement des points pour chaque médicament.
+		for(let i=0; i<this.tabl.length; i++){
+			let numeroFamilleCourante;
+			if(formes.indexOf(this.tabl[i].formePharmaceutique)!=-1){
+				let rangForme = formes.indexOf(this.tabl[i].formePharmaceutique)
+				if(voies.indexOf(this.tabl[i].voiesAdministration)!=1){
+					numeroFamilleCourante = familles[rangForme][voies.indexOf(this.tabl[i].voiesAdministration)];
+				}else{
+					let rangVoies = voies.push(this.tabl[i].voiesAdministration);
+					numeroFamilleCourante = numeroFamille++;
+					familles[rangForme][rangVoies-1] = numeroFamilleCourante;
+				}
+			}else{
+				numeroFamilleCourante = numeroFamille++;
+				let rangForme = formes.push(this.tabl[i].formePharmaceutique);
+				if(voies.indexOf(this.tabl[i].voiesAdministration)!=1){
+					familles[rangForme-1] = Array();
+					familles[rangForme-1][voies.indexOf(this.tabl[i].voiesAdministration)] = numeroFamilleCourante;
+				}else{
+					let rangVoies = voies.push(this.tabl[i].voiesAdministration);
+					familles[rangForme-1] = Array();
+					familles[rangForme-1][rangVoies-1] = numeroFamilleCourante;
+				}
+			}
+			this.dataFDG.nodes.push({id: this.tabl[i].denomination, group: numeroFamilleCourante, dateAMM: this.tabl[i].dateAMM});
+		}
+
+		// Établissement des liens entre les points.
+		this.dataFDG.nodes.sort(
+			function(a, b){
+				let dateStr = a.dateAMM.split('/');
+				let dateStr2 = b.dateAMM.split('/');
+				return Date.parse(dateStr[2] + '-' + dateStr[1] + '-' + dateStr[0]) - Date.parse(dateStr2[2] + '-' + dateStr2[1] + '-' + dateStr2[0]);
+			}
+		)
+		for(let i=0; i<this.dataFDG.nodes.length; i++){
+			if(this.dataFDG.nodes[i+1]!=undefined){
+				this.dataFDG.links.push({source: this.dataFDG.nodes[i].id, target: this.dataFDG.nodes[i+1].id, value: this.dataFDG.nodes[i].group});
+			}
+		}
+		let dejaPasse = Array();
+		for(let i=0; i<this.dataFDG.nodes.length; i++){
+			if(dejaPasse.indexOf(i)==-1){
+				for(let j=1; j<this.dataFDG.nodes.length; j++){
+					if(this.dataFDG.nodes[i].group==this.dataFDG.nodes[j].group && dejaPasse.indexOf(j)==-1){
+						this.dataFDG.links.push({source: this.dataFDG.nodes[i].id, target: this.dataFDG.nodes[j].id, value: this.dataFDG.nodes[i].group});
+						dejaPasse.push(j);
+						dejaPasse.push(i);
+					}
+				}
+			}
+		}
 	}
 }
