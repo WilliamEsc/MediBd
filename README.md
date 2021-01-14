@@ -46,7 +46,7 @@ le serveur nodeJs se lance sur le port 3000, pour modifier allez dans `MediBd/se
 ## Organisation
 
 #### NODEJS+MONGODB
-La partie NodeJS et MONGODB se situe dans server-medibd, et as été conçu par ESCRIVA William<br/>
+La partie NodeJS et MONGODB se situe dans server-medibd<br/>
      Dans server-medibd/routes/ vous trouverez un fichier api.js qui contient toutes les requêtes qui sont effectuer pour communiquer avec la base de données.<br/>
     Dans server-medibd/models/ vous trouverez les schémas des collections de la base de donnée.<br/>
     <br/>
@@ -71,9 +71,6 @@ Une représentation visuel des components et services du site:
         - liste-medicament-labo<br/>
   - footer
 - donnees.service.ts<br/>
-
-Les parties header, footer, recherche, recherche-avancee, resultats ont été conçu par ALLARD MATHIEU.<br/>
-La partie analyses et donnees.service.ts a été concu par ESCRIVA William.
 
 
 
