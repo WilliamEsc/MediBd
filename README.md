@@ -60,7 +60,7 @@ Une représentation visuel des components et services du site:
   - header
   - body<br/>
     -  recherche<br/>
-      - recherche-avancee
+        - recherche-avancee
       - resultats
         - zoomable-circle-packing
         - forced-directed-graph
