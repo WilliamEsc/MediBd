@@ -42,26 +42,33 @@ export class AnalysesComponent implements OnInit {
 					}
 				})
 				this.donnees.getPropPrincAnnee({ titulaire: select }).subscribe(
-					data => {
-						this.childBar.constructStackedBarChart(data.value);
+					response => {
+						this.childBar.constructStackedBarChart(response.value);
 					}
 				);
-				this.donnees.getDescMedicamentTitulaire({ titulaire: select }).subscribe(
-					data => {
-						this.childListeM.updateMedicament(data.value);
+				this.donnees.getMedicamentTitulaire({ titulaire: select }).subscribe(
+					response => {
+						this.childListeM.updateMedicament(response.value);
 					}
 				)
 			}
 		}else{
 			document.getElementById('divAnalyse').setAttribute('class','divAnalyse d-none');
-
 		}
+	}
+
+	getDesc(event){
+		this.donnees.getDescMedicament({denomination:event.denomination}).subscribe(
+			response =>{
+				this.childListeM.detailMedoc(response.value[0],event.index);
+			}
+		)
 	}
 
 	getLabo() {
 		this.donnees.getPropPrincLab().subscribe(
-			data => {
-				this.childListeL.updateLabo(data.value);
+			response => {
+				this.childListeL.updateLabo(response.value);
 			}
 		);
 	}

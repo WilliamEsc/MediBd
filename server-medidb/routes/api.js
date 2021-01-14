@@ -11,10 +11,10 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', async function () {
 	db.db.listCollections().toArray(
-		function (err, names){
-			if(err){
+		function (err, names) {
+			if (err) {
 				console.log(err);
-			}else{
+			} else {
 				names.map(
 					(name) => {
 						if (name.name == "proportionPrincep") {
@@ -58,11 +58,13 @@ db.once('open', async function () {
 			let copy = [];
 
 			docs.map(
-					element => {
-					copy.push({ titulaire: element._id.titulaire.trim(),
-						data:[{nom:"Generique" ,value: element.nb_gene},
-						{nom:"Princep" ,value: element.nb_princ},
-						{nom:"Autre" ,value: element.nb_med-element.nb_princ-element.nb_gene}]});
+				element => {
+					copy.push({
+						titulaire: element._id.titulaire.trim(),
+						data: [{ nom: "Generique", value: element.nb_gene },
+						{ nom: "Princep", value: element.nb_princ },
+						{ nom: "Autre", value: element.nb_med - element.nb_princ - element.nb_gene }]
+					});
 				}
 			)
 			return copy;
@@ -79,30 +81,73 @@ db.once('open', async function () {
 	console.log("connection ready");
 });
 
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
 	res.send(200, ({ sucess: true }));
 });
 
-router.get('/getTitulaire', function(
-	req, res, next){
-		specialite.distinct("titulaire").exec(
-			function (err, data){
-				if (err) throw err;
-				if (data.length === 0) {
-					res.status(404).send('no data found');
-					return;
-				}
-				data.sort((a, b) => (a.titulaire > b.titulaire) ? 1 : ((b.titulaire > a.titulaire) ? -1 : 0));
-				res.send({ value: data });
+router.get('/getTitulaire', function (
+	req, res, next) {
+	specialite.distinct("titulaire").exec(
+		function (err, data) {
+			if (err) throw err;
+			if (data.length === 0) {
+				res.status(404).send('no data found');
+				return;
 			}
-		);
+			data.sort((a, b) => (a.titulaire > b.titulaire) ? 1 : ((b.titulaire > a.titulaire) ? -1 : 0));
+			res.send({ value: data });
+		}
+	);
+}
+);
+
+router.post(
+	'/getMedicamentTitulaire', function (req, res, next) {
+		specialite.aggregate([
+			{ $match: { titulaire: " " + req.body.titulaire } },
+			{
+				$lookup: {
+					from: groupeGenerique.collection.name,
+					localField: "codeCis",
+					foreignField: "codeCis",
+					as: "gene"
+				}
+			},
+			{
+				$unwind: {
+					"path": "$gene",
+					"preserveNullAndEmptyArrays": true
+				}
+			},
+			{ $project: { "denomination": 1, "gene.typeGenerique": 1} } 
+		])
+			.exec()
+			.then(
+				docs => {
+					console.log(docs);
+					let ret=[];
+					docs.forEach(element => {
+						if(element.gene){
+							if(element.gene.typeGenerique==0){
+								ret.push({...element,class:"Generique"});
+							}else{
+								ret.push({...element,class:"Princep"});
+							}
+						}else{
+							ret.push({...element,class:"autre"});
+						}
+					});
+					ret.sort((a, b) => (a.denomination > b.denomination) ? 1 : ((b.denomination > a.denomination) ? -1 : 0));
+					res.send({ value: ret });
+				}
+			);
 	}
 );
 
 router.post(
-	'/DescMedicamentTitulaire',function(req,res,next){
+	'/getDescMedicament', function (req, res, next) {
 		specialite.aggregate([
-			{ $match: { titulaire: " " + req.body.titulaire } },
+			{ $match: { denomination: req.body.denomination } },
 			{
 				$lookup: {
 					from: groupeGenerique.collection.name,
@@ -136,7 +181,7 @@ router.post(
 );
 
 router.post(
-	'/getPropPrincAnnee', function (req, res, next){
+	'/getPropPrincAnnee', function (req, res, next) {
 		specialite.aggregate([
 			{ $match: { titulaire: " " + req.body.titulaire } },
 			{
@@ -163,18 +208,18 @@ router.post(
 						element => {
 							let date = element.dateAMM.split('/');
 							if (!ret.some(e => e.annee === date[2])) {
-								if(!element.gene){
-									ret.push({ annee: date[2], princep: 0, generique: 0,autre: 1 });
+								if (!element.gene) {
+									ret.push({ annee: date[2], princep: 0, generique: 0, autre: 1 });
 								}
 								else if (element.gene && element.gene.typeGenerique == 0) {
-									ret.push({ annee: date[2], princep: 1, generique: 0,autre: 0 });
+									ret.push({ annee: date[2], princep: 1, generique: 0, autre: 0 });
 								} else {
-									ret.push({ annee: date[2], princep: 0, generique: 1,autre: 0 });
+									ret.push({ annee: date[2], princep: 0, generique: 1, autre: 0 });
 								}
-							}else{
+							} else {
 								ret.some(e => {
 									if (e.annee === date[2]) {
-										if(!element.gene){
+										if (!element.gene) {
 											e.autre++;
 										}
 										else if (element.gene.typeGenerique == 0) {
@@ -188,7 +233,7 @@ router.post(
 							}
 						}
 					);
-					ret.sort((a,b) => (a.annee > b.annee) ? 1 : ((b.annee > a.annee) ? -1 : 0)); 
+					ret.sort((a, b) => (a.annee > b.annee) ? 1 : ((b.annee > a.annee) ? -1 : 0));
 					res.send({ value: ret });
 				}
 			);
@@ -196,13 +241,13 @@ router.post(
 );
 
 router.post(
-	'/getPropPrincLab', function (req, res, next){
-		let find={};
-		if(req.body.titulaire){
-			find={titulaire: req.body.titulaire}
+	'/getPropPrincLab', function (req, res, next) {
+		let find = {};
+		if (req.body.titulaire) {
+			find = { titulaire: req.body.titulaire }
 		}
 		proportionPrincep.find(
-			find, function (err, data){
+			find, function (err, data) {
 				if (err) throw err;
 				if (data.length === 0) {
 					res.status(404).send('no data found');
@@ -215,60 +260,60 @@ router.post(
 );
 
 router.post(
-	'/getMedi', function (req, res, next){
+	'/getMedi', function (req, res, next) {
 		/*Object.entries(req.body).forEach(([key, value]) => {
 				console.log(key + ' : ' + value);
 		});*/
 		let recherche = {};
-		if(req.body.research){
+		if (req.body.research) {
 			recherche = { ...recherche, denomination: { "$regex": req.body.research, "$options": 'i' } };
 		}
-		if(req.body.titulaire) {
-			let tabTitu=[];
-			req.body.titulaire.split(",").map(element=>{
-				tabTitu.push(" "+element.trim());
+		if (req.body.titulaire) {
+			let tabTitu = [];
+			req.body.titulaire.split(",").map(element => {
+				tabTitu.push(" " + element.trim());
 			})
-			recherche = { ...recherche, titulaire: { "$in": tabTitu} };
+			recherche = { ...recherche, titulaire: { "$in": tabTitu } };
 		}
-		if(req.body.voies){
-			let tabVoie=req.body.voies;
-			let strVoie="";
-			req.body.voies.map(element=>{
-				strVoie+=";"+element;
+		if (req.body.voies) {
+			let tabVoie = req.body.voies;
+			let strVoie = "";
+			req.body.voies.map(element => {
+				strVoie += ";" + element;
 			})
 			tabVoie.push(strVoie.slice(1));
-			recherche = { ...recherche, voiesAdministration: { "$in": tabVoie} };
+			recherche = { ...recherche, voiesAdministration: { "$in": tabVoie } };
 		}
-		if(req.body.formes){
-			recherche = { ...recherche, formePharmaceutique: { "$in": req.body.formes} };
+		if (req.body.formes) {
+			recherche = { ...recherche, formePharmaceutique: { "$in": req.body.formes } };
 		}
-		if(req.body.autorisation){
-			recherche = { ...recherche, statutAdministratif: { "$in": req.body.autorisation} };
+		if (req.body.autorisation) {
+			recherche = { ...recherche, statutAdministratif: { "$in": req.body.autorisation } };
 		}
-		if(req.body.commercialise){
-			recherche = { ...recherche, etatDeCommercialisation: { "$in": req.body.commercialise} };
+		if (req.body.commercialise) {
+			recherche = { ...recherche, etatDeCommercialisation: { "$in": req.body.commercialise } };
 		}
-		if(req.body.surveillance){
-			recherche = { ...recherche, surveillanceRenforcee: { "$in": req.body.surveillance} };
+		if (req.body.surveillance) {
+			recherche = { ...recherche, surveillanceRenforcee: { "$in": req.body.surveillance } };
 		}
-		if(req.body.statut){
-			recherche = { ...recherche, statutBdm: { "$in": req.body.statut} };
+		if (req.body.statut) {
+			recherche = { ...recherche, statutBdm: { "$in": req.body.statut } };
 		}
-		if(req.body.autorisation_euro){
-			recherche = { ...recherche, numeroAutorisationEuropeenne: req.body.autorisation_euro};
+		if (req.body.autorisation_euro) {
+			recherche = { ...recherche, numeroAutorisationEuropeenne: req.body.autorisation_euro };
 		}
-		specialite.find(recherche, function (err, data){
+		specialite.find(recherche, function (err, data) {
 			if (err) throw err;
 			/*if (data.length === 0) { // Permet la capture d'un résultat vide pour l'affichage d'un message approprié.
 				res.send({ value: data });
 			}*/
 			res.send({ value: data });
 		});
-});
+	});
 
 router.get(
-	'/getAllMedi', function(req, res, next){
-		specialite.find({}, { denomination: 1 }, function (err, data){
+	'/getAllMedi', function (req, res, next) {
+		specialite.find({}, { denomination: 1 }, function (err, data) {
 			if (err) throw err;
 			if (data.length === 0) {
 				res.status(404).send('no data found');
@@ -280,7 +325,7 @@ router.get(
 );
 
 router.get(
-	'/getForme', async function (req, res, next){
+	'/getForme', async function (req, res, next) {
 		const data = await specialite.aggregate([
 			{ $group: { _id: { formePharmaceutique: "$formePharmaceutique" } } },
 			{ $sort: { '_id.formePharmaceutique': 1 } }
@@ -290,7 +335,7 @@ router.get(
 );
 
 router.get(
-	'/getVoies', async function (req, res, next){
+	'/getVoies', async function (req, res, next) {
 		const data = await specialite.find({}).select({ voiesAdministration: 1 });
 		const tab = data.map(entry => { return entry.voiesAdministration });
 		let tabReturn = [];
@@ -309,7 +354,7 @@ router.get(
 );
 
 router.get(
-	'/getAMM', async function (req, res, next){
+	'/getAMM', async function (req, res, next) {
 		const data = await specialite.aggregate([
 			{ $group: { _id: { typeProcedureAMM: "$typeProcedureAMM" } } },
 			{ $sort: { '_id.typeProcedureAMM': 1 } }
