@@ -16,56 +16,56 @@ export class RechercheComponent implements OnInit {
 	ngOnInit(){}
 
 	test						= '';
-	tabl						= Array();				// Contenus du resultat brut.
-	resultats					= false;				// Existence d'un résultat.
-	resultatsNonNul 			= false;				// Existence d'un résultat contenant au moins un élément.
-	resultatsMultiples			= false;				// Existence d'un résultat contenant au moins deux élément.
-	collectionSize				= 0;					// Nbr de résultats.
+	tabl						= Array();					// Contenus du resultat brut.
+	resultats					= false;					// Existence d'un résultat.
+	resultatsNonNul 			= false;					// Existence d'un résultat contenant au moins un élément.
+	resultatsMultiples			= false;					// Existence d'un résultat contenant au moins deux élément.
+	collectionSize				= 0;						// Nbr de résultats.
 	records						= Array();
-	pageSize					= 10;					// Nombre de ligne dans la présentation en tableau par page.
-	page						= 1;					// Page courante.
-	dataZCP						= Object();				// Résultat dans un format JSON adapté au graphique en cercles concentriques zoomables.
-	dataFDG 					= {						// Résultats dans un format JSON adapté au graphique en force directrice.
+	pageSize					= 10;						// Nombre de ligne dans la présentation en tableau par page.
+	page						= 1;						// Page courante.
+	dataZCP						= Object();					// Résultat dans un format JSON adapté au graphique en cercles concentriques zoomables.
+	dataFDG 					= {							// Résultats dans un format JSON adapté au graphique en force directrice.
 									nodes : Array(),
 									links : Array()
 								};
-	affichageMenusZCP			= Array(false, false);	// Contrôle l'affichage/masquage des <select> supplémentaires du ZCP.
-	collectionSizeInfAPageSize	= false;				// Indique si collectionSize est inférieur à pageSize.
-	trisCourantTableau			= String();				// Indique le tris appliqué sur le tableau.
-	rechercheEnCours			= false;
-	menusZCP					= Array(				// Valeur et Étiquette des <option> des <select> du ZCP.
-									Array("denomination", "Dénomination"),
-									Array("codeCis", "Code CIS"),
-									Array("formePharmaceutique", "Forme pharmaceutique"),
-									Array("voiesAdministration", "Voies d'administration"),
-									Array("statutAdministratif", "Statut administratif de l'AMM"),
-									Array("typeProcedureAMM", "Type de procédure AMM"),
-									Array("etatDeCommercialisation", "État de commercialisation"),
-									Array("dateAMM", "Date AMM"),
-									Array("statutBdm", "Statut Bdm"),
-									Array("numeroAutorisationEuropeenne", "Numéro d'autorisation européenne"),
-									Array("titulaire", "Titulaire"),
-									Array("surveillanceRenforcee", "Surveillance renforcée")
+	affichageMenusZCP			= Array(false, false);		// Contrôle l'affichage/masquage des <select> supplémentaires du ZCP.
+	collectionSizeInfAPageSize	= false;					// Indique si collectionSize est inférieur à pageSize.
+	trisCourantTableau			= String('denomination');	// Indique le tris appliqué sur le tableau.
+	trisCourantTableauInverse	= false;					// Indique si le tris appliqué sur le tableau est inversé.
+	rechercheEnCours			= false;					// Indique si une recherche est en train d'être effectuée par l'utilisateur (contrôle la boucle de chargement).
+	menusZCP					= Array(					// Valeur et Étiquette des <option> des <select> du ZCP.
+									Array('denomination', 'Dénomination'),
+									Array('codeCis', 'Code CIS'),
+									Array('formePharmaceutique', 'Forme pharmaceutique'),
+									Array('voiesAdministration', 'Voies d&rsquo;administration'),
+									Array('statutAdministratif', 'Statut administratif de l&rsquo;AMM'),
+									Array('typeProcedureAMM', 'Type de procédure AMM'),
+									Array('etatDeCommercialisation', 'État de commercialisation'),
+									Array('dateAMM', 'Date AMM'),
+									Array('statutBdm', 'Statut Bdm'),
+									Array('numeroAutorisationEuropeenne', 'Numéro d&rsquo;autorisation européenne'),
+									Array('titulaire', 'Titulaire'),
+									Array('surveillanceRenforcee', 'Surveillance renforcée')
 								);
 	menus						= Array(				// Valeurs et étiquettes des <th> du tableau.
-									Array("denomination", "Dénomination"),
-									Array("codeCis", "Code "),
-									Array("formePharmaceutique", "Forme pharmaceutique"),
-									Array("voiesAdministration", "Voies d'administration"),
-									Array("statutAdministratif", "Statut administratif de l"),
-									Array("typeProcedureAMM", "Type de procédure de l"),
-									Array("etatDeCommercialisation", "État de commercialisation"),
-									Array("dateAMM", "Date de l"),
-									Array("statutBdm", "Statut Bdm"),
-									Array("numeroAutorisationEuropeenne", "Numéro d'autorisation européenne"),
-									Array("titulaire", "Titulaire"),
-									Array("surveillanceRenforcee", "Surveillance renforcée")
-								);
-
+									Array('denomination', 'Dénomination'),
+									Array('codeCis', 'Code <abbr title="Code Identifiant de Spécialité" class="initialism">CIS</abbr>'),
+									Array('formePharmaceutique', 'Forme pharmaceutique'),
+									Array('voiesAdministration', 'Voies d&rsquo;administration'),
+									Array('statutAdministratif', 'Statut administratif de l&rsquo;<a href="https://www.ansm.sante.fr/Activites/Autorisations-de-Mise-sur-le-Marche-AMM/L-AMM-et-le-parcours-du-medicament/(offset)/3" target="_blank"><abbr title="Autorisation de Mise sur le Marché" class="initialism">AMM</abbr></a>'),
+									Array('typeProcedureAMM', 'Type de procédure de l&rsquo;<a href="https://www.ansm.sante.fr/Activites/Autorisations-de-Mise-sur-le-Marche-AMM/L-AMM-et-le-parcours-du-medicament/(offset)/3" target="_blank"><abbr title="Autorisation de Mise sur le Marché" class="initialism">AMM</abbr></a>'),
+									Array('etatDeCommercialisation', 'État de commercialisation'),
+									Array('dateAMM', 'Date de l&rsquo;<a href="https://www.ansm.sante.fr/Activites/Autorisations-de-Mise-sur-le-Marche-AMM/L-AMM-et-le-parcours-du-medicament/(offset)/3" target="_blank"><abbr title="Autorisation de Mise sur le Marché" class="initialism">AMM</abbr></a>'),
+									Array('statutBdm', 'Statut Bdm'),
+									Array('numeroAutorisationEuropeenne', 'Numéro d&rsquo;autorisation européenne'),
+									Array('titulaire', 'Titulaire'),
+									Array('surveillanceRenforcee', 'Surveillance renforcée')
+								)
 	isCollapsed			= false;						// Utilisé pour indiquer l'affichage de la recherche avancée.
 
 	public appelRecherche(event): void {
-		this.rechercheEnCours = true;
+		this.rechercheEnCours = true; // // Démarre la boucle de chargement.
 		let test = this.test;
 		const target = event.target;
 		let query = {}; //objet de la requête
@@ -130,11 +130,13 @@ export class RechercheComponent implements OnInit {
 
 		var toto  = Object();
 		
+		// Traitement du résultat :
 		this.donnees.getData(query).subscribe(
 			data => {
 				toto = data;								// Récupération des données dans un Object pour
-				this.rechercheEnCours = false;
+				this.rechercheEnCours = false;				// Arrête la boucle de chargement.
 				this.tabl = toto.value;						// accéder sans erreur de compilation à son membre .value.
+				// Modifications adéquates des variables membres :
 				this.resultats = true;
 				this.collectionSize = this.tabl.length;
 				this.majCollectionSizeInfAPageSize();
@@ -148,6 +150,7 @@ export class RechercheComponent implements OnInit {
 					this.resultatsNonNul = false;
 					this.resultatsMultiples = false;
 				}
+				// Conversion des données vers des formats JSON compatibles aux 2 diagrammes :
 				this.resultatToZCP();
 				this.resultatToFDG();
 			}
@@ -420,26 +423,29 @@ export class RechercheComponent implements OnInit {
 	}
 
 	trisTableau(index: string): void{ // Tris le tableau de résultats selon l'index passé en paramètre.
-		if(index!=''){
-			if(index==this.trisCourantTableau){
-				this.tabl.reverse();
-			}else{
-				this.trisCourantTableau = index;
-				this.tabl.sort(
-					function(a, b){
-						if(index=='dateAMM'){
-							let dateStr = a[index].split('/');
-							let dateStr2 = b[index].split('/');
-							return Date.parse(dateStr[2] + '-' + dateStr[1] + '-' + dateStr[0]) - Date.parse(dateStr2[2] + '-' + dateStr2[1] + '-' + dateStr2[0]);
-						}else if(typeof a[index] === 'number'){
-							return a[index] - b[index];
-						}else{
-							return a[index].localeCompare(b[index]);
-						}
-						
+		if(index==this.trisCourantTableau && this.trisCourantTableauInverse == false){
+			this.tabl.reverse();
+			this.trisCourantTableauInverse = true;
+		}else if(index==this.trisCourantTableau){
+			this.tabl.reverse();
+			this.trisCourantTableauInverse = false;
+		}else{
+			this.trisCourantTableauInverse = true;
+			this.trisCourantTableau = index;
+			this.tabl.sort(
+				function(a, b){
+					if(index=='dateAMM'){
+						let dateStr = a[index].split('/');
+						let dateStr2 = b[index].split('/');
+						return Date.parse(dateStr[2] + '-' + dateStr[1] + '-' + dateStr[0]) - Date.parse(dateStr2[2] + '-' + dateStr2[1] + '-' + dateStr2[0]);
+					}else if(typeof a[index] === 'number'){
+						return a[index] - b[index];
+					}else{
+						return a[index].localeCompare(b[index]);
 					}
-				)
-			}
+					
+				}
+			)
 		}
 	}
 

@@ -1,3 +1,4 @@
+<!-- PARTIE RECHERCHE -->
 <section class="row justify-content-center" style="margin:0 0 0 0;">
 	<h1>Recherche de médicaments</h1>
 	<form class="form-group col-8 justify-content-center" (ngSubmit)="appelRecherche($event)"><!-- Réglage Largeur de la barre de recherche principale -->
@@ -37,6 +38,7 @@
 	</form>
 </section>
 
+<!-- PARTIE RÉSULTATS -->
 <app-resultat>
 	<section *ngIf="resultats">
 		<div class="row justify-content-center">
@@ -86,25 +88,24 @@
 									<thead>
 										<tr>
 											<th *ngFor="let colonne of menus" scope="col" class="text-center">
-												<span *ngIf="!(colonne[0]=='codeCis' || colonne[0]=='statutAdministratif' || colonne[0]=='typeProcedureAMM' || colonne[0]=='dateAMM')">
-													{{ colonne[1] }}
-												</span>
-												<span *ngIf="colonne[0]=='statutAdministratif' || colonne[0]=='typeProcedureAMM' || colonne[0]=='dateAMM'">
-													{{ colonne[1] }}&rsquo;<a href="https://www.ansm.sante.fr/Activites/Autorisations-de-Mise-sur-le-Marche-AMM/L-AMM-et-le-parcours-du-medicament/(offset)/3" target="_blank"><abbr title="Autorisation de Mise sur le Marché" class="initialism">AMM</abbr></a>
-												</span>
-												<span *ngIf="colonne[0]=='codeCis'">
-													{{ colonne[1] }} <abbr title="Code Identifiant de Spécialité" class="initialism">CIS</abbr>
-												</span>
-												<span *ngIf="trisCourantTableau!=colonne[0]" title="Trier par {{ colonne[1] }}">
+												<span [innerHTML]=colonne[1]></span>
+												<!-- Fléches de tris du tableau : -->
+												<span *ngIf="trisCourantTableau==colonne[0] && trisCourantTableauInverse == true" title="Trier inversement par {{ colonne[1] }}">
 													<svg (click)="trisTableau(colonne[0])" style="cursor:pointer;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 														<path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
 													</svg>
 												</span>
-												<span *ngIf="trisCourantTableau==colonne[0]" title="Trier par {{ colonne[1] }}">
+												<span *ngIf="trisCourantTableau==colonne[0] && trisCourantTableauInverse == false" title="Trier par {{ colonne[1] }}">
 													<svg (click)="trisTableau(colonne[0])" style="cursor:pointer;" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
 														<path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
 													</svg>
 												</span>
+												<span *ngIf="trisCourantTableau!=colonne[0]" title="Trier par {{ colonne[1] }}">
+													<svg (click)="trisTableau(colonne[0])" style="cursor:pointer;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down" viewBox="0 0 16 16">
+														<path d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659l4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z"/>
+													</svg>
+												</span>
+												<!-- Fin Flèches -->
 											</th>
 										</tr>
 									</thead>
@@ -133,11 +134,12 @@
 							<ng-template ngbNavContent>
 								<app-zoomable-circle-packing [data]=dataZCP>
 									<div class="row">
+										<!-- Selections des critères de tris -->
 										<div class="col col-4">
 											<span class="d-inline">Grouper par&nbsp;: </span>
 											<select id="critere1" (change)="resultatToZCP(0)" class="custom-select d-inline" aria-label="Default select example">
 												<option value="0" selected>...</option>
-												<option *ngFor="let choix of menusZCP" value="{{choix[0]}}">{{choix[1]}}</option>
+												<option *ngFor="let choix of menusZCP" value="{{choix[0]}}" [innerHTML]="choix[1]"></option>
 											</select>
 										</div>
 										<div class="col col-4">
@@ -145,7 +147,7 @@
 												<span class="d-inline">puis par&nbsp;: </span>
 												<select id="critere2" (change)="resultatToZCP(1)" class="custom-select d-inline" aria-label="Default select example">
 													<option value="0" selected>...</option>
-													<option *ngFor="let choix of menusZCP" value="{{choix[0]}}">{{choix[1]}}</option>
+													<option *ngFor="let choix of menusZCP" value="{{choix[0]}}" [innerHTML]="choix[1]"></option>
 												</select>
 											</div>
 										</div>
@@ -154,10 +156,11 @@
 												<span class="d-inline">puis par&nbsp;: </span>
 												<select id="critere3" (change)="resultatToZCP(2)" class="custom-select d-inline" aria-label="Default select example">
 													<option value="0" selected>...</option>
-													<option *ngFor="let choix of menusZCP" value="{{choix[0]}}">{{choix[1]}}</option>
+													<option *ngFor="let choix of menusZCP" value="{{choix[0]}}" [innerHTML]="choix[1]"></option>
 												</select>
 											</div>
 										</div>
+										<!-- Fin sélection -->
 									</div>
 									<div id="zoomableCircle"></div>
 								</app-zoomable-circle-packing>
