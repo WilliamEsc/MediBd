@@ -1,17 +1,15 @@
 <div class="divLabo">
-    <div class="statLabo" id="statLabo">
-
-    </div>
-    <div class="form-select" >
-        <h3>Choix d'un laboratoire</h3>
-        <select class="form-control" id="exampleFormControlSelect1" #mySelect
-        (change)="updateParent(mySelect.value)" >
-            <option></option>
-            <option id="{{labo.titulaire}}" *ngFor="let labo of laboratoires">
-                <label for="{{labo.titulaire}}">
-                    {{labo.titulaire}}
-                </label>
-        </select>
-    </div>
+	<div class="statLabo" id="statLabo">
+	</div>
+	<div class="form-select" >
+		<h3>Choix d&rsquo;un laboratoire</h3>
+		<select class="form-control custom-select" id="exampleFormControlSelect1" #mySelect (change)="updateParent(mySelect.value)" >
+			<option></option>
+			<option id="{{labo.titulaire}}" *ngFor="let labo of laboratoires">
+				<label for="{{labo.titulaire}}">
+					{{labo.titulaire}}
+				</label>
+		</select>
+	</div>
 </div>
 

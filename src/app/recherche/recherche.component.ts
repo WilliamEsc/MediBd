@@ -49,7 +49,7 @@ export class RechercheComponent implements OnInit {
 								);
 	menus						= Array(				// Valeurs et étiquettes des <th> du tableau.
 									Array("denomination", "Dénomination"),
-									Array("codeCis", "Code CIS"),
+									Array("codeCis", "Code "),
 									Array("formePharmaceutique", "Forme pharmaceutique"),
 									Array("voiesAdministration", "Voies d'administration"),
 									Array("statutAdministratif", "Statut administratif de l"),
@@ -144,6 +144,9 @@ export class RechercheComponent implements OnInit {
 					if(this.tabl.length>1){
 						this.resultatsMultiples = true;
 					}
+				}else{
+					this.resultatsNonNul = false;
+					this.resultatsMultiples = false;
 				}
 				this.resultatToZCP();
 				this.resultatToFDG();
